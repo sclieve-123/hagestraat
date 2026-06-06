@@ -291,8 +291,10 @@
 
   <div class="footlink">
     <a id="openSettings">⚙ Startvermogen &amp; buffer</a><br><br>
+    <a id="exportBtn">⬇ Back-up downloaden</a> &nbsp;·&nbsp; <a id="importBtn">⬆ Back-up terugzetten</a><br><br>
     <a id="resetBtn">↺ Reset naar oorspronkelijke Excel-data</a>
   </div>
+  <input type="file" id="importFile" accept="application/json,.json" style="display:none">
 </div>
 
 <button class="fab" id="fab"><span class="plus">+</span> <span id="fabLabel">Toevoegen</span></button>
@@ -987,6 +989,44 @@ document.getElementById('resetBtn').onclick=()=>{
   if(confirm('Terug naar de oorspronkelijke Excel-data? Eigen toevoegingen gaan verloren.')){
     S=defaultState();persist();renderAll();toast('Gereset ✓');
   }
+};
+
+// ---- Back-up: exporteren naar een bestandje ----
+document.getElementById('exportBtn').onclick=()=>{
+  try{
+    const data=JSON.stringify(S,null,2);
+    const blob=new Blob([data],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const d=new Date();
+    const stamp=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    a.href=url; a.download='hagestraat-backup-'+stamp+'.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    toast('Back-up gedownload ✓');
+  }catch(e){ toast('Back-up mislukt'); }
+};
+
+// ---- Back-up terugzetten: importeren uit een bestandje ----
+document.getElementById('importBtn').onclick=()=>{ document.getElementById('importFile').click(); };
+document.getElementById('importFile').onchange=(ev)=>{
+  const file=ev.target.files&&ev.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const obj=JSON.parse(reader.result);
+      // simpele check of het een geldig back-upbestand is
+      if(!obj || typeof obj!=='object' || !('projects' in obj) || !('income' in obj)){
+        toast('Geen geldig back-upbestand'); return;
+      }
+      if(confirm('Back-up terugzetten? Je huidige gegevens worden vervangen.')){
+        S=obj; persist(); renderAll(); toast('Back-up teruggezet ✓');
+      }
+    }catch(e){ toast('Bestand kon niet gelezen worden'); }
+    ev.target.value=''; // reset zodat hetzelfde bestand opnieuw kan
+  };
+  reader.readAsText(file);
 };
 
 let toastT;
