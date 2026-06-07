@@ -39,11 +39,11 @@
       linear-gradient(170deg, var(--bg-grad-b), var(--bg-grad-c));
     background-attachment:fixed;}
   .wrap{max-width:540px;margin:0 auto;padding:0 14px;}
-  header{padding:24px 0 6px;}
+  header{padding:28px 0 10px;}
   .eyebrow{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2);font-weight:600;}
   h1{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:26px;margin-top:3px;letter-spacing:-.02em;color:var(--ink);}
 
-  .tabs{display:flex;gap:5px;margin:16px 0 4px;background:var(--glass-soft);padding:5px;border-radius:16px;border:1px solid var(--line2);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);}
+  .tabs{display:flex;gap:5px;margin:18px 0 16px;background:var(--glass-soft);padding:5px;border-radius:16px;border:1px solid var(--line2);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);}
   .tabs button{flex:1;background:transparent;border:none;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:13px;padding:11px 4px;border-radius:12px;cursor:pointer;transition:all .2s;}
   .tabs button.active{background:var(--glass-strong);color:var(--ink);box-shadow:0 2px 8px rgba(60,54,48,.20);}
 
@@ -128,18 +128,22 @@
   .drag-h{flex:0 0 auto;color:var(--muted2);opacity:.4;font-size:15px;cursor:grab;touch-action:none;padding:0 4px;line-height:1;user-select:none;-webkit-user-select:none;}
   .drag-h:active{cursor:grabbing;opacity:.8;}
   .brow .nm .drag-h{margin-right:2px;}
-  .dragging{opacity:.45;}
-  .drag-over-line{box-shadow:inset 0 2px 0 var(--accent);}
+  .dragging{opacity:.96;box-shadow:0 12px 30px rgba(0,0,0,.45);border-radius:14px;transition:box-shadow .15s;}
+  .drop-line{height:0;border-top:2px solid var(--accent);margin:-1px 6px;border-radius:2px;box-shadow:0 0 6px rgba(95,208,122,.5);pointer-events:none;}
   .btotal{display:flex;justify-content:space-between;padding:15px;background:var(--glass-strong);font-weight:600;border-top:1px solid var(--line);}
   .btotal .v{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:18px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums;}
   .btotal .v.over{color:var(--accent);}
 
   .proj{margin-bottom:11px;}
-  .proj-h{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:15px 17px;cursor:pointer;}
+  .proj-h{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:15px 17px;cursor:pointer;}
+  .proj-h .drag-h{margin-top:2px;}
+  .proj-h .figs{margin-top:1px;}
   .proj-h .proj-drag{font-size:15px;}
-  .proj-h .proj-caret{flex:0 0 auto;color:var(--muted2);opacity:.45;font-size:13px;transition:transform .25s;}
+  .proj-h .proj-caret{flex:0 0 auto;color:var(--muted2);opacity:.45;font-size:13px;transition:transform .25s;margin-top:3px;}
   .proj.open .proj-h .proj-caret{transform:rotate(180deg);}
-  .proj-h .nm{font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px;min-width:0;flex:1;}
+  .proj-h .nm{font-weight:600;font-size:15px;display:flex;flex-direction:column;gap:6px;min-width:0;flex:1;}
+  .proj-h .nm .nm-top{display:flex;align-items:center;gap:8px;min-width:0;}
+  .proj-h .nm .nm-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
   .proj.open .proj-h .nm .pn{cursor:pointer;text-decoration:underline;text-decoration-color:var(--line2);text-underline-offset:3px;}
   .proj.open .proj-h .nm .pn:active{text-decoration-color:var(--muted2);}
   .proj.open .proj-h .nm .mnwrap{cursor:pointer;}
@@ -156,6 +160,7 @@
   .proj-h .nm .paybadge{flex:0 0 auto;font-size:9.5px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:999px;white-space:nowrap;}
   .proj-h .nm .paybadge.all{color:var(--accent-ink);background:var(--accent);}
   .proj-h .nm .paybadge.some{color:var(--accent);background:var(--accent-dim);border:1px solid var(--accent-dim);}
+  .proj-h .nm .paybadge.deduct{color:var(--gold);background:rgba(240,217,160,.13);border:1px solid rgba(240,217,160,.3);}
   .proj.allpaid .proj-h .nm .pn{color:var(--muted);}
   .proj.allpaid{opacity:.82;}
   .proj-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
@@ -201,6 +206,22 @@
   .ptot .col-rea.filled{color:var(--accent);}
   .ptot .col-rea.over{color:var(--warn);}
   .new-proj{width:100%;background:var(--glass-soft);border:1px dashed var(--line);color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:13px;padding:15px;border-radius:16px;cursor:pointer;margin-bottom:11px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+  /* huis-overzicht bovenaan projecten */
+  .house-card{margin-top:6px;margin-bottom:14px;}
+  .house-h{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 17px;cursor:pointer;}
+  .house-h .house-lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);font-weight:600;}
+  .house-h .house-net{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:4px;}
+  .house-h .house-sub{font-size:11.5px;color:var(--muted2);margin-top:2px;}
+  .house-h .house-cog{flex:0 0 auto;color:var(--muted2);opacity:.5;font-size:15px;}
+  .house-h:active .house-cog{opacity:1;color:var(--accent);}
+  .house-detail{padding:4px 17px 15px;border-top:1px solid var(--line2);}
+  .house-detail .hline{display:flex;justify-content:space-between;font-size:12.5px;padding:8px 0;border-bottom:1px solid var(--line2);}
+  .house-detail .hline:last-child{border-bottom:none;}
+  .house-detail .hline .l{color:var(--muted2);}
+  .house-detail .hline .r{font-weight:600;font-variant-numeric:tabular-nums;}
+  .house-detail .hline.tot{margin-top:2px;border-top:2px solid var(--line);border-bottom:none;padding-top:11px;}
+  .house-detail .hline.tot .l{color:var(--ink);font-weight:700;}
+  .house-detail .hline.tot .r{font-size:14px;}
 
   .fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + var(--safe-bottom));z-index:40;
     background:var(--glass-strong);color:var(--ink);border:1px solid rgba(255,255,255,.22);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:14.5px;
@@ -264,7 +285,6 @@
   </div>
 
   <div class="view active" id="view-model">
-    <p class="intro">Je doorlopende cashbalans. Per maand: wat je begint, wat je inlegt vanuit je balans, welke projectkosten eraf gaan, en wat er overblijft. Tik een maand open voor details.</p>
     <div class="strip">
       <div class="scell"><div class="k">Startvermogen</div><div class="v gold" id="sStart">—</div></div>
       <div class="scell"><div class="k">Doel-buffer</div><div class="v" id="sBuffer">—</div></div>
@@ -274,7 +294,6 @@
   </div>
 
   <div class="view" id="view-balans">
-    <p class="intro">Inkomsten en vaste lasten per maand. Blader terug of vooruit. Onderaan zie je wat je die maand "over" hebt om in te leggen voor het huis.</p>
     <div class="month-nav">
       <button id="bPrev">‹</button>
       <div class="mlabel" id="bMonthLabel">—<small id="bMonthState"></small></div>
@@ -284,8 +303,8 @@
   </div>
 
   <div class="view" id="view-proj">
-    <p class="intro">Kosten gegroepeerd per project. Elke post heeft begroot en realiteit (zodra je realiteit invult, telt die mee in je vermogensmodel). Voeg losse posten toe — ook die 3 uur aannemer die later komt.</p>
     <div id="projBody"></div>
+    <div id="houseBox"></div>
     <button class="new-proj" id="newProjBtn">+ Nieuw project</button>
   </div>
 
@@ -328,72 +347,464 @@ let openProjects=new Set(); // welke projecten staan uitgeklapt
 
 function defaultState(){
   return {
-    start:102000, buffer:25000,
-    income:[
-      {id:'loon', name:'Loon', recurring:true, amount:3500, months:{Jan:3100}},
-      {id:'jub', name:'Jubelton', recurring:false, byMonth:{Mrt:32000}},
-      {id:'vak', name:'Vakantiegeld', recurring:false, byMonth:{Mei:1500}},
-      {id:'borg', name:'Teruggave borg', recurring:false, byMonth:{Jul:1500}},
-      {id:'over', name:'Overname spullen', recurring:false, byMonth:{Jul:500}},
-      {id:'bon', name:'Bonus', recurring:false, byMonth:{Aug:1750}},
-      {id:'spaar', name:'Extra sparen', recurring:false, byMonth:{Apr:1660}},
+    "start": 70000,
+    "buffer": 25000,
+    "income": [
+      {
+        "id": "loon",
+        "name": "Loon",
+        "recurring": true,
+        "amount": 3500,
+        "months": {
+          "Jan": 3100
+        }
+      },
+      {
+        "id": "jub",
+        "name": "Jubelton",
+        "recurring": false,
+        "byMonth": {
+          "Mrt": 32000
+        }
+      },
+      {
+        "id": "vak",
+        "name": "Vakantiegeld",
+        "recurring": false,
+        "byMonth": {
+          "Mei": 1500
+        }
+      },
+      {
+        "id": "borg",
+        "name": "Teruggave borg",
+        "recurring": false,
+        "byMonth": {
+          "Jul": 1500
+        }
+      },
+      {
+        "id": "over",
+        "name": "Overname spullen",
+        "recurring": false,
+        "byMonth": {
+          "Jul": 500
+        }
+      },
+      {
+        "id": "bon",
+        "name": "Bonus",
+        "recurring": false,
+        "byMonth": {
+          "Aug": 1750
+        }
+      },
+      {
+        "id": "spaar",
+        "name": "Extra sparen",
+        "recurring": false,
+        "byMonth": {
+          "Apr": 1660
+        }
+      }
     ],
-    fixed:[
-      {id:'hyp',name:'Hypotheek',amount:1430},{id:'vve',name:'VVE',amount:150},
-      {id:'lout',name:'Lout',amount:250},{id:'verz',name:'Verzekeringen',amount:70},
-      {id:'gwl',name:'Gas/Water/Licht',amount:110},{id:'odm',name:'Odido Mobiel',amount:30},
-      {id:'odt',name:'Odido Thuis',amount:30},{id:'zorg',name:'Zorgverzekering',amount:170},
-      {id:'sport',name:'Sportschool',amount:55},{id:'bood',name:'Boodschappen',amount:500},
-      {id:'extra',name:'Extra uitgaven',amount:150},{id:'vrij',name:'Vrije tijd',amount:135},
+    "fixed": [
+      {
+        "id": "hyp",
+        "name": "Hypotheek",
+        "amount": 1430
+      },
+      {
+        "id": "vve",
+        "name": "VVE",
+        "amount": 150
+      },
+      {
+        "id": "lout",
+        "name": "Lout",
+        "amount": 250
+      },
+      {
+        "id": "verz",
+        "name": "Verzekeringen",
+        "amount": 70
+      },
+      {
+        "id": "gwl",
+        "name": "Gas/Water/Licht",
+        "amount": 110
+      },
+      {
+        "id": "odm",
+        "name": "Odido Mobiel",
+        "amount": 30
+      },
+      {
+        "id": "odt",
+        "name": "Odido Thuis",
+        "amount": 30
+      },
+      {
+        "id": "zorg",
+        "name": "Zorgverzekering",
+        "amount": 170
+      },
+      {
+        "id": "sport",
+        "name": "Sportschool",
+        "amount": 55
+      },
+      {
+        "id": "bood",
+        "name": "Boodschappen",
+        "amount": 500
+      },
+      {
+        "id": "extra",
+        "name": "Extra uitgaven",
+        "amount": 150
+      },
+      {
+        "id": "vrij",
+        "name": "Vrije tijd",
+        "amount": 135
+      }
     ],
-    projects:[
-      {id:'p_eig',name:'Eigen inleg',month:'Jun',items:[{id:'i1',name:'Inleg (jubel)',budget:50000,actual:50000,date:''}]},
-      {id:'p_keuk',name:'Keuken',month:'Jul',items:[
-        {id:'k1',name:'Keukenblad',budget:1450,actual:null,date:''},
-        {id:'k2',name:'Kasten',budget:2000,actual:null,date:''},
-        {id:'k3',name:'Fronten',budget:1950,actual:null,date:''},
-        {id:'k4',name:'Japandi',budget:1030,actual:null,date:''},
-        {id:'k5',name:'Plinten',budget:550,actual:null,date:''},
-        {id:'k6',name:'Planken',budget:980,actual:null,date:''},
-        {id:'k7',name:'Verlichting',budget:300,actual:null,date:''},
-        {id:'k8',name:'Overig',budget:580,actual:null,date:''},
-        {id:'k9',name:'Losse kosten',budget:200,actual:null,date:''},
-      ]},
-      {id:'p_app',name:'Keukenapparatuur',month:'Jun',items:[
-        {id:'a1',name:'Kookplaat',budget:2500,actual:2600,date:''},
-        {id:'a2',name:'Oven',budget:1000,actual:1450,date:''},
-        {id:'a3',name:'Vaatwasser',budget:700,actual:845,date:''},
-        {id:'a4',name:'Koelkast',budget:1500,actual:1540,date:''},
-        {id:'a5',name:'Quooker',budget:1200,actual:1040,date:''},
-        {id:'a6',name:'Wijnkoelkast',budget:1000,actual:1200,date:''},
-        {id:'a7',name:'Wasbak',budget:200,actual:200,date:''},
-      ]},
-      {id:'p_hyp',name:'Hypotheekkosten',month:'Jun',items:[
-        {id:'h1',name:'Taxatierapport',budget:850,actual:710,date:''},
-        {id:'h2',name:'NHG',budget:1223,actual:1223,date:''},
-        {id:'h3',name:'Bemiddeling en advies',budget:2100,actual:1350,date:''},
-        {id:'h4',name:'Leveringsakte',budget:800,actual:null,date:''},
-        {id:'h5',name:'Afhandelingskosten',budget:750,actual:750,date:''},
-        {id:'h6',name:'Hypotheekakte',budget:800,actual:800,date:''},
-      ]},
-      {id:'p_bad',name:'Badkamer',month:'Jul',items:[
-        {id:'b1',name:'Wasmeubel',budget:500,actual:null,date:''},
-        {id:'b2',name:'Verwarmde spiegel',budget:300,actual:null,date:''},
-      ]},
-      {id:'p_vloer',name:'Vloer',month:'Jun',items:[{id:'v1',name:'Vloer incl. leggen',budget:3600,actual:null,date:''}]},
-      {id:'p_inr',name:'Inrichting',month:'Jul',items:[
-        {id:'r1',name:'Raamdecoratie',budget:2000,actual:null,date:''},
-        {id:'r2',name:'Bank',budget:1500,actual:null,date:''},
-        {id:'r3',name:'Eettafel',budget:1000,actual:null,date:''},
-        {id:'r4',name:'Kasten',budget:800,actual:null,date:'',month:'Aug'},
-      ]},
-      {id:'p_ov',name:'Overig',month:'Sep',items:[
-        {id:'o1',name:'TV',budget:1000,actual:null,date:''},
-        {id:'o2',name:'Wasmachine',budget:1000,actual:null,date:''},
-        {id:'o3',name:'Planken achter bank',budget:300,actual:null,date:''},
-        {id:'o4',name:'DJ meubel ombouwen',budget:200,actual:null,date:''},
-      ]},
-    ]
+    "projects": [
+      {
+        "id": "p_eig",
+        "name": "Eigen inleg",
+        "month": "Jun",
+        "items": [
+          {
+            "id": "i1",
+            "name": "Inleg (jubel)",
+            "budget": 50000,
+            "actual": 50000,
+            "date": "",
+            "paid": false
+          }
+        ]
+      },
+      {
+        "id": "p_keuk",
+        "name": "Keuken",
+        "month": "Jul",
+        "items": [
+          {
+            "id": "k1",
+            "name": "Keukenblad",
+            "budget": 1450,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "k2",
+            "name": "Kasten",
+            "budget": 2000,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "k3",
+            "name": "Fronten",
+            "budget": 1950,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "k4",
+            "name": "Japandi",
+            "budget": 1030,
+            "actual": null,
+            "date": "",
+            "paid": false
+          },
+          {
+            "id": "k5",
+            "name": "Plinten",
+            "budget": 550,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "k6",
+            "name": "Planken",
+            "budget": 980,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "k7",
+            "name": "Verlichting",
+            "budget": 300,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "k8",
+            "name": "Overig",
+            "budget": 580,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "k9",
+            "name": "Losse kosten",
+            "budget": 200,
+            "actual": null,
+            "date": ""
+          }
+        ]
+      },
+      {
+        "id": "p_app",
+        "name": "Keukenapparatuur",
+        "month": "Jun",
+        "items": [
+          {
+            "id": "a1",
+            "name": "Kookplaat",
+            "budget": 2500,
+            "actual": 2600,
+            "date": "",
+            "paid": false
+          },
+          {
+            "id": "a2",
+            "name": "Oven",
+            "budget": 1000,
+            "actual": 1450,
+            "date": ""
+          },
+          {
+            "id": "a3",
+            "name": "Vaatwasser",
+            "budget": 700,
+            "actual": 845,
+            "date": ""
+          },
+          {
+            "id": "a4",
+            "name": "Koelkast",
+            "budget": 1500,
+            "actual": 1540,
+            "date": ""
+          },
+          {
+            "id": "a5",
+            "name": "Quooker",
+            "budget": 1200,
+            "actual": 1040,
+            "date": ""
+          },
+          {
+            "id": "a6",
+            "name": "Wijnkoelkast",
+            "budget": 1000,
+            "actual": 1200,
+            "date": ""
+          },
+          {
+            "id": "a7",
+            "name": "Wasbak",
+            "budget": 200,
+            "actual": 200,
+            "date": ""
+          }
+        ]
+      },
+      {
+        "id": "p_hyp",
+        "name": "Hypotheekkosten",
+        "month": "Jun",
+        "items": [
+          {
+            "id": "h1",
+            "name": "Taxatierapport",
+            "budget": 850,
+            "actual": 710,
+            "date": ""
+          },
+          {
+            "id": "h2",
+            "name": "NHG",
+            "budget": 1223,
+            "actual": 1223,
+            "date": ""
+          },
+          {
+            "id": "h3",
+            "name": "Bemiddeling en advies",
+            "budget": 2100,
+            "actual": 1350,
+            "date": ""
+          },
+          {
+            "id": "h4",
+            "name": "Leveringsakte",
+            "budget": 800,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "h5",
+            "name": "Afhandelingskosten",
+            "budget": 750,
+            "actual": 750,
+            "date": ""
+          },
+          {
+            "id": "h6",
+            "name": "Hypotheekakte",
+            "budget": 800,
+            "actual": 800,
+            "date": ""
+          }
+        ]
+      },
+      {
+        "id": "p_bad",
+        "name": "Badkamer",
+        "month": "Jul",
+        "items": [
+          {
+            "id": "b1",
+            "name": "Wasmeubel",
+            "budget": 500,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "b2",
+            "name": "Verwarmde spiegel",
+            "budget": 300,
+            "actual": null,
+            "date": "",
+            "paid": false
+          }
+        ]
+      },
+      {
+        "id": "p_vloer",
+        "name": "Vloer",
+        "month": "Jun",
+        "items": [
+          {
+            "id": "v1",
+            "name": "Vloer incl. leggen",
+            "budget": 3600,
+            "actual": 3300,
+            "date": "",
+            "paid": false
+          }
+        ]
+      },
+      {
+        "id": "p_inr",
+        "name": "Inrichting",
+        "month": "Jul",
+        "items": [
+          {
+            "id": "r1",
+            "name": "Raamdecoratie",
+            "budget": 2000,
+            "actual": null,
+            "date": "",
+            "paid": false
+          },
+          {
+            "id": "r2",
+            "name": "Bank",
+            "budget": 1500,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "r3",
+            "name": "Eettafel",
+            "budget": 1000,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "x1780834409354430",
+            "name": "Verf",
+            "budget": 500,
+            "actual": null,
+            "date": "",
+            "paid": false
+          }
+        ]
+      },
+      {
+        "id": "p_ov",
+        "name": "Overig",
+        "month": "Sep",
+        "items": [
+          {
+            "id": "o1",
+            "name": "TV",
+            "budget": 1000,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "o2",
+            "name": "Wasmachine",
+            "budget": 1000,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "o3",
+            "name": "Planken achter bank",
+            "budget": 300,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "o4",
+            "name": "DJ meubel ombouwen",
+            "budget": 200,
+            "actual": null,
+            "date": ""
+          },
+          {
+            "id": "x178083435533566",
+            "name": "Tv standaard",
+            "budget": 200,
+            "actual": null,
+            "date": "",
+            "paid": false
+          }
+        ]
+      },
+      {
+        "id": "x1780834228246675",
+        "name": "Kasten",
+        "month": "Aug",
+        "items": [
+          {
+            "id": "x1780834261549153",
+            "name": "Kast woonkamer",
+            "budget": 1500,
+            "actual": null,
+            "date": "",
+            "paid": false
+          },
+          {
+            "id": "x178083427508028",
+            "name": "Kast slaapkamer",
+            "budget": 1500,
+            "actual": null,
+            "date": "",
+            "paid": false
+          }
+        ]
+      }
+    ],
+    "housePrice": 450000
   };
 }
 
@@ -569,7 +980,49 @@ function renderBalans(){
   if(fixCard) makeReorderable(fixCard,'.brow[data-fixid]','data-fixid',(order)=>{ S.fixed=reorderArrayById(S.fixed,order,'id'); persist();renderBalans(); });
 }
 
+function renderHouse(){
+  const box=document.getElementById('houseBox'); if(!box) return;
+  const price=+S.housePrice||0;
+  // aftrekposten: projecten met een deduction-bedrag
+  const deducts=S.projects.filter(p=>(+p.deduction||0)>0).map(p=>({name:p.name,amount:+p.deduction}));
+  const totalDeduct=deducts.reduce((s,d)=>s+d.amount,0);
+  const netto=price-totalDeduct;
+  const deductLines = deducts.length
+    ? deducts.map(d=>`<div class="hline"><span class="l">− ${escapeHtml(d.name)} (zelf doen)</span><span class="r">${euro(d.amount)}</span></div>`).join('')
+    : `<div class="hline"><span class="l" style="color:var(--muted2)">Nog geen aftrekposten. Stel ze in via een project.</span><span class="r"></span></div>`;
+  box.innerHTML=`
+    <div class="card house-card">
+      <div class="house-h" id="houseEdit">
+        <div>
+          <div class="house-lbl">Aankoop woning</div>
+          <div class="house-net">${euro(netto)}</div>
+          <div class="house-sub">betaal je aan de verkoper</div>
+        </div>
+        <span class="house-cog">⚙</span>
+      </div>
+      <div class="house-detail">
+        <div class="hline"><span class="l">Koopprijs</span><span class="r">${euro(price)}</span></div>
+        ${deductLines}
+        <div class="hline tot"><span class="l">Netto aan verkoper</span><span class="r">${euro(netto)}</span></div>
+      </div>
+    </div>`;
+  document.getElementById('houseEdit').onclick=openEditHouse;
+}
+function openEditHouse(){
+  document.getElementById('sheetTitle').textContent='Aankoop woning';
+  document.getElementById('sheetSub').textContent='De koopprijs. Aftrekposten stel je per project in (onderdelen die je zelf doet).';
+  document.getElementById('formArea').innerHTML=`
+    <div class="field"><label>Koopprijs (€)</label><input type="number" id="hPrice" inputmode="decimal" value="${+S.housePrice||0}"></div>
+    <div class="hintline">Per project kun je aangeven welk bedrag van de koopprijs af gaat als je dat onderdeel zelf doet (bijv. keuken −€8.000). Dat doe je in het bewerkscherm van het project.</div>
+    <button class="save" id="hSave">Opslaan</button>`;
+  document.getElementById('hSave').onclick=()=>{
+    S.housePrice=parseFloat(document.getElementById('hPrice').value)||0;
+    persist();renderAll();closeSheets();toast('Aangepast ✓');
+  };
+  scrim.classList.add('show');sheet.classList.add('show');
+}
 function renderProj(){
+  renderHouse();
   const box=document.getElementById('projBody');box.innerHTML='';
   S.projects.forEach(p=>{
     const t=projectTotals(p);
@@ -590,11 +1043,16 @@ function renderProj(){
     const payBadge = payState==='all'
       ? `<span class="paybadge all">✓ Betaald</span>`
       : (payState==='some' ? `<span class="paybadge some">${paidN}/${n} betaald</span>` : '');
+    const deductBadge = (+p.deduction||0)>0 ? `<span class="paybadge deduct" title="Telt mee in de huisaftrek">− huis ${euro(p.deduction)}</span>` : '';
+    const badges = `${payBadge}${deductBadge}`;
     const el=document.createElement('div'); el.className='card proj'+(openProjects.has(p.id)?' open':'')+(payState==='all'?' allpaid':''); el.setAttribute('data-projid',p.id);
     el.innerHTML=`
       <div class="proj-h">
         <span class="drag-h proj-drag" title="Sleep om te ordenen">⠿</span>
-        <div class="nm"><span class="pn" data-editproj="${p.id}">${escapeHtml(p.name)}</span><span class="mnwrap" data-editproj="${p.id}">${monthChips}</span>${payBadge}</div>
+        <div class="nm">
+          <div class="nm-top"><span class="pn" data-editproj="${p.id}">${escapeHtml(p.name)}</span><span class="mnwrap" data-editproj="${p.id}">${monthChips}</span></div>
+          ${badges?`<div class="nm-badges">${badges}</div>`:''}
+        </div>
         <div class="figs">
           <b class="${t.actual>t.budget?'over':(allDone?'done':'')}">${euro(t.actual)}</b>
           <span class="sub">begroot ${euro(t.budget)}</span>
@@ -670,49 +1128,69 @@ function escapeHtml(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&l
 // rowSel: selector van de sleepbare rijen; idAttr: data-attribuut met de id.
 // onReorder(newIdOrder) krijgt de nieuwe volgorde van id's terug.
 function makeReorderable(container, rowSel, idAttr, onReorder, handleSel){
-  let dragEl=null, rows=[], startY=0;
   handleSel=handleSel||'.drag-h';
   container.querySelectorAll(rowSel).forEach(row=>{
     const handle=row.querySelector(handleSel);
     if(!handle) return;
+    let rows=[], startY=0, startTop=0, lastY=0, dropLine=null, moved=false;
+
+    handle.addEventListener('click', e=>{ e.stopPropagation(); });
     handle.addEventListener('pointerdown', e=>{
       e.preventDefault(); e.stopPropagation();
-      dragEl=row; startY=e.clientY;
       rows=Array.from(container.querySelectorAll(rowSel));
+      startY=e.clientY; lastY=e.clientY; moved=false;
+      const r=row.getBoundingClientRect();
+      startTop=r.top;
+      // licht de rij op: zweeft mee, blijft op zijn plek tot je beweegt
       row.classList.add('dragging');
+      row.style.zIndex='50';
+      row.style.position='relative';
+      // drop-lijn die de landplek toont
+      dropLine=document.createElement('div');
+      dropLine.className='drop-line';
       handle.setPointerCapture(e.pointerId);
     });
-    handle.addEventListener('click', e=>{ e.stopPropagation(); });
+
     handle.addEventListener('pointermove', e=>{
-      if(!dragEl) return;
+      if(!rows.length) return;
       e.preventDefault();
+      const dy=e.clientY-startY;
+      if(Math.abs(dy)>3) moved=true;
+      lastY=e.clientY;
+      // de rij beweegt mee onder de vinger
+      row.style.transform=`translateY(${dy}px) scale(1.02)`;
+      // bepaal landplek: rij waarvan het midden het dichtst bij de vinger ligt
       const y=e.clientY;
-      // vind rij waar we boven zweven
-      let target=null;
+      let target=null, after=false;
       for(const r of rows){
-        if(r===dragEl) continue;
+        if(r===row) continue;
         const b=r.getBoundingClientRect();
-        if(y>=b.top && y<=b.bottom){ target=r; break; }
+        if(y>=b.top-4 && y<=b.bottom+4){
+          target=r; after = y > b.top + b.height/2; break;
+        }
       }
-      // markeer drop-positie
-      rows.forEach(r=>r.classList.remove('drag-over-line'));
       if(target){
-        const b=target.getBoundingClientRect();
-        const after = y > b.top + b.height/2;
-        if(after){ target.after(dragEl); } else { target.before(dragEl); }
-      } else {
-        // boven de eerste of onder de laatste
-        const first=rows[0], last=rows[rows.length-1];
-        if(first && y < first.getBoundingClientRect().top) container.insertBefore(dragEl, first.classList.contains('dragging')?first.nextSibling:first);
+        if(after){ target.after(dropLine); } else { target.before(dropLine); }
+      } else if(rows.length){
+        const first=rows.find(r=>r!==row), last=[...rows].reverse().find(r=>r!==row);
+        if(first && y < first.getBoundingClientRect().top){ first.before(dropLine); }
+        else if(last){ last.after(dropLine); }
       }
     });
+
     const finish=e=>{
-      if(!dragEl) return;
-      dragEl.classList.remove('dragging');
+      if(!rows.length) return;
+      // plaats de rij op de positie van de drop-lijn
+      if(dropLine && dropLine.parentNode){ dropLine.parentNode.insertBefore(row, dropLine); dropLine.remove(); }
+      row.classList.remove('dragging');
+      row.style.transform=''; row.style.zIndex=''; row.style.position=''; 
       try{handle.releasePointerCapture(e.pointerId);}catch(_){}
-      dragEl=null;
-      const newOrder=Array.from(container.querySelectorAll(rowSel)).map(r=>r.getAttribute(idAttr));
-      onReorder(newOrder);
+      const wasMoved=moved;
+      rows=[]; dropLine=null;
+      if(wasMoved){
+        const newOrder=Array.from(container.querySelectorAll(rowSel)).map(r=>r.getAttribute(idAttr));
+        onReorder(newOrder);
+      }
     };
     handle.addEventListener('pointerup', finish);
     handle.addEventListener('pointercancel', finish);
@@ -782,10 +1260,7 @@ function projItemFields(){
     <div class="field"><label>Realiteit (€)</label><input type="number" id="fActual" inputmode="decimal" placeholder="leeg = nog niet"></div>
   </div>
   <div class="hintline">Vul realiteit pas in als je echt betaald hebt — dan telt dat bedrag mee in je vermogensmodel.</div>
-  <div class="row2">
-    <div class="field"><label>Betaalmaand</label><select id="fMonth">${monthOpts(CURRENT_MONTH)}</select></div>
-    <div class="field"><label>Datum betaald (optioneel)</label><input type="date" id="fDate"></div>
-  </div>`;
+  <div class="field"><label>Betaalmaand</label><select id="fMonth">${monthOpts(CURRENT_MONTH)}</select></div>`;
 }
 function openItemSheet(projId, fromFab){
   document.getElementById('sheetTitle').textContent='Post toevoegen';
@@ -802,15 +1277,12 @@ function saveItem(projId){
   const budget=parseFloat(document.getElementById('fBudget').value)||0;
   const av=document.getElementById('fActual').value;
   const actual=av===''?null:parseFloat(av);
-  let month=document.getElementById('fMonth').value;
-  const date=document.getElementById('fDate').value;
+  const month=document.getElementById('fMonth').value;
   const p=S.projects.find(x=>x.id===projId);
-  const item={id:uid(),name,budget,actual,date};
-  // datum ingevuld => meteen als betaald markeren, en maand volgt de datum
-  if(date){ item.paid=true; const dm=monthFromDate(date); if(dm) month=dm; }
+  const item={id:uid(),name,budget,actual,date:''};
   if(month!==p.month) item.month=month;
   p.items.push(item);
-  persist();renderAll();closeSheets();toast(date?'Post toegevoegd & betaald ✓':'Post toegevoegd ✓');
+  persist();renderAll();closeSheets();toast('Post toegevoegd ✓');
 }
 
 // ----- bestaand onderdeel bewerken (titel, begroot, realiteit, betaalmaand) -----
@@ -826,19 +1298,24 @@ function openEditItem(projId,itemId){
   document.getElementById('fBudget').value=(it.budget!=null?it.budget:'');
   document.getElementById('fActual').value=(it.actual!=null&&it.actual!=='')?it.actual:'';
   document.getElementById('fMonth').innerHTML=monthOpts(im);
-  if(it.date) document.getElementById('fDate').value=it.date;
+  // als de post al betaald is: betaaldatum tonen en aanpasbaar maken
+  if(it.paid){
+    const fa=document.getElementById('formArea');
+    const dateField=document.createElement('div');
+    dateField.className='field';
+    dateField.innerHTML=`<label>Betaaldatum</label><input type="date" id="fPaidDate" value="${it.date||todayISO()}">`;
+    fa.insertBefore(dateField, document.getElementById('saveEditItemBtn'));
+  }
   document.getElementById('saveEditItemBtn').onclick=()=>{
     const name=document.getElementById('fName').value.trim()||'Naamloos';
     const budget=parseFloat(document.getElementById('fBudget').value)||0;
     const av=document.getElementById('fActual').value;
     const actual=av===''?null:parseFloat(av);
     let month=document.getElementById('fMonth').value;
-    const date=document.getElementById('fDate').value;
-    // als er een betaaldatum is, volgt de maand die datum
-    if(date){ const dm=monthFromDate(date); if(dm) month=dm; }
-    it.name=name; it.budget=budget; it.actual=actual; it.date=date;
-    // datum bepaalt betaald-status: ingevuld = betaald, leeg = niet betaald
-    it.paid = !!date;
+    it.name=name; it.budget=budget; it.actual=actual;
+    // betaaldatum (alleen aanwezig als post betaald is); maand volgt die datum
+    const pd=document.getElementById('fPaidDate');
+    if(pd){ it.date=pd.value; const dm=monthFromDate(pd.value); if(dm) month=dm; }
     if(month!==p.month){ it.month=month; } else { delete it.month; }
     persist();renderAll();closeSheets();toast('Aangepast ✓');
   };
@@ -854,12 +1331,16 @@ function openEditProject(projId){
     <div class="field"><label>Projectnaam</label><input type="text" id="epName" autocomplete="off" value="${escapeHtml(p.name)}"></div>
     <div class="field"><label>Standaard betaalmaand</label><select id="epMonth">${monthOpts(p.month)}</select></div>
     <div class="hintline">De standaardmaand geldt voor onderdelen zonder eigen betaalmaand.</div>
+    <div class="field"><label>Aftrek koopprijs woning (€)</label><input type="number" id="epDeduct" inputmode="decimal" placeholder="0" value="${p.deduction!=null?p.deduction:''}"></div>
+    <div class="hintline">Doe je dit onderdeel zelf in plaats van de verkoper? Vul het bedrag in dat van de koopprijs af gaat. Laat leeg als dat niet zo is.</div>
     <button class="save" id="epSave">Opslaan</button>
     <div class="footlink" style="margin:14px 0 4px"><a id="epDel">🗑 Heel project verwijderen</a></div>`;
   document.getElementById('epSave').onclick=()=>{
     const name=document.getElementById('epName').value.trim()||p.name;
     const month=document.getElementById('epMonth').value;
+    const dv=document.getElementById('epDeduct').value;
     p.name=name; p.month=month;
+    if(dv===''||parseFloat(dv)===0){ delete p.deduction; } else { p.deduction=parseFloat(dv)||0; }
     persist();renderAll();closeSheets();toast('Aangepast ✓');
   };
   document.getElementById('epDel').onclick=()=>{
