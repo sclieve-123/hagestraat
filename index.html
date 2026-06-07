@@ -219,9 +219,18 @@
   .house-detail .hline:last-child{border-bottom:none;}
   .house-detail .hline .l{color:var(--muted2);}
   .house-detail .hline .r{font-weight:600;font-variant-numeric:tabular-nums;}
-  .house-detail .hline.tot{margin-top:2px;border-top:2px solid var(--line);border-bottom:none;padding-top:11px;}
-  .house-detail .hline.tot .l{color:var(--ink);font-weight:700;}
-  .house-detail .hline.tot .r{font-size:14px;}
+  .house-detail .hline.tot{margin-top:2px;border-top:1px solid var(--line);padding-top:11px;}
+  .house-detail .hline.tot .l{color:var(--ink);font-weight:600;}
+  .house-detail .hline.tot .r{font-size:14px;font-weight:700;color:var(--accent);}
+  .house-extra{margin-top:2px;border-top:2px solid var(--line);}
+  .house-detail .hline.grand{cursor:pointer;border-bottom:none;padding-top:12px;}
+  .house-detail .hline.grand .l{color:var(--ink);font-weight:700;display:flex;align-items:center;gap:6px;}
+  .house-detail .hline.grand .r{font-size:15px;font-weight:700;color:var(--accent);}
+  .house-extra .hcaret{font-size:11px;color:var(--muted2);transition:transform .25s;display:inline-block;}
+  .house-extra.open .hcaret{transform:rotate(180deg);}
+  .house-extra-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .house-extra.open .house-extra-body{max-height:400px;}
+  .house-extra-note{font-size:11px;color:var(--muted2);line-height:1.5;padding:6px 0 2px;}
 
   .fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + var(--safe-bottom));z-index:40;
     background:var(--glass-strong);color:var(--ink);border:1px solid rgba(255,255,255,.22);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:14.5px;
@@ -304,8 +313,8 @@
 
   <div class="view" id="view-proj">
     <div id="projBody"></div>
-    <div id="houseBox"></div>
     <button class="new-proj" id="newProjBtn">+ Nieuw project</button>
+    <div id="houseBox"></div>
   </div>
 
   <div class="footlink">
@@ -344,6 +353,7 @@ const MFULL={Jan:'Januari',Feb:'Februari',Mrt:'Maart',Apr:'April',Mei:'Mei',Jun:
 const CURRENT_MONTH = MONTHS[new Date().getMonth()];
 let showPast=false; // voorbije maanden standaard ingeklapt
 let openProjects=new Set(); // welke projecten staan uitgeklapt
+let houseExtraOpen=false; // werkelijk-totaal-detail standaard ingeklapt
 
 function defaultState(){
   return {
@@ -983,13 +993,19 @@ function renderBalans(){
 function renderHouse(){
   const box=document.getElementById('houseBox'); if(!box) return;
   const price=+S.housePrice||0;
-  // aftrekposten: projecten met een deduction-bedrag
-  const deducts=S.projects.filter(p=>(+p.deduction||0)>0).map(p=>({name:p.name,amount:+p.deduction}));
-  const totalDeduct=deducts.reduce((s,d)=>s+d.amount,0);
+  // aftrek-projecten: projecten met een deduction-bedrag
+  const dProjects=S.projects.filter(p=>(+p.deduction||0)>0);
+  const totalDeduct=dProjects.reduce((s,p)=>s+(+p.deduction||0),0);
   const netto=price-totalDeduct;
-  const deductLines = deducts.length
-    ? deducts.map(d=>`<div class="hline"><span class="l">− ${escapeHtml(d.name)} (zelf doen)</span><span class="r">${euro(d.amount)}</span></div>`).join('')
+  // werkelijke kosten van die aftrek-projecten (realiteit indien ingevuld, anders begroot)
+  const totalActual=dProjects.reduce((s,p)=>s+projectTotals(p).actual,0);
+  const werkelijk=netto+totalActual;
+  const deductLines = dProjects.length
+    ? dProjects.map(p=>`<div class="hline"><span class="l">− ${escapeHtml(p.name)} (zelf doen)</span><span class="r">${euro(+p.deduction)}</span></div>`).join('')
     : `<div class="hline"><span class="l" style="color:var(--muted2)">Nog geen aftrekposten. Stel ze in via een project.</span><span class="r"></span></div>`;
+  const actualLines = dProjects.length
+    ? dProjects.map(p=>`<div class="hline"><span class="l">+ ${escapeHtml(p.name)} (eigen kosten)</span><span class="r">${euro(projectTotals(p).actual)}</span></div>`).join('')
+    : '';
   box.innerHTML=`
     <div class="card house-card">
       <div class="house-h" id="houseEdit">
@@ -1004,9 +1020,21 @@ function renderHouse(){
         <div class="hline"><span class="l">Koopprijs</span><span class="r">${euro(price)}</span></div>
         ${deductLines}
         <div class="hline tot"><span class="l">Netto aan verkoper</span><span class="r">${euro(netto)}</span></div>
+        <div class="house-extra${houseExtraOpen?' open':''}" id="houseExtra">
+          <div class="hline grand" id="houseGrandToggle">
+            <span class="l">Werkelijk totaal <span class="hcaret">▾</span></span>
+            <span class="r">${euro(werkelijk)}</span>
+          </div>
+          <div class="house-extra-body">
+            <div class="house-extra-note">Netto aan verkoper + je eigen werkelijke kosten van de onderdelen die je zelf doet:</div>
+            ${actualLines||'<div class="hline"><span class="l" style="color:var(--muted2)">Geen aftrek-projecten</span><span class="r"></span></div>'}
+          </div>
+        </div>
       </div>
     </div>`;
   document.getElementById('houseEdit').onclick=openEditHouse;
+  const gt=document.getElementById('houseGrandToggle');
+  if(gt) gt.onclick=(e)=>{ e.stopPropagation(); houseExtraOpen=!houseExtraOpen; document.getElementById('houseExtra').classList.toggle('open',houseExtraOpen); };
 }
 function openEditHouse(){
   document.getElementById('sheetTitle').textContent='Aankoop woning';
