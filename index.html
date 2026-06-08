@@ -39,9 +39,26 @@
       linear-gradient(170deg, var(--bg-grad-b), var(--bg-grad-c));
     background-attachment:fixed;}
   .wrap{max-width:540px;margin:0 auto;padding:0 14px;}
-  header{padding:28px 0 10px;}
+  header{padding:28px 0 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .head-left{min-width:0;}
   .eyebrow{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2);font-weight:600;}
   h1{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:26px;margin-top:3px;letter-spacing:-.02em;color:var(--ink);}
+  .head-right{flex:none;display:flex;align-items:center;gap:8px;margin-top:4px;}
+  .eye-btn{flex:none;width:40px;height:40px;border-radius:13px;background:var(--glass);border:1px solid var(--line);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .18s;
+    backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:var(--shadow);}
+  .eye-btn svg{width:19px;height:19px;}
+  .eye-btn.hidden-on{color:var(--accent);border-color:var(--accent);background:var(--accent-dim);}
+  .eye-btn:active{transform:scale(.92);}
+  .intrek-badge{flex:none;height:40px;display:flex;flex-direction:column;justify-content:center;gap:1px;
+    background:var(--glass);border:1px solid var(--line);border-radius:13px;padding:0 12px;text-align:right;
+    backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:var(--shadow);}
+  .intrek-badge .ib-n{font-size:14px;font-weight:700;color:var(--gold);letter-spacing:-.01em;line-height:1.05;}
+  .intrek-badge .ib-n small{font-size:9px;color:var(--muted2);font-weight:600;}
+  .intrek-badge .ib-k{font-size:7.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted2);font-weight:600;}
+  /* verborgen bedragen */
+  .amount-hidden{filter:blur(8px);-webkit-filter:blur(8px);opacity:.85;user-select:none;pointer-events:none;}
+  body.hide-amounts .amt{filter:blur(7px);-webkit-filter:blur(7px);opacity:.9;user-select:none;}
 
   .tabs{display:flex;gap:5px;margin:18px 0 16px;background:var(--glass-soft);padding:5px;border-radius:16px;border:1px solid var(--line2);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);}
   .tabs button{flex:1;background:transparent;border:none;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:13px;padding:11px 4px;border-radius:12px;cursor:pointer;transition:all .2s;}
@@ -233,122 +250,186 @@
   .house-extra-note{font-size:11px;color:var(--muted2);line-height:1.5;padding:6px 0 2px;}
 
   /* ===== Planning (Gantt) ===== */
-  .plan-strip{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 6px;}
-  .plan-strip .pcell{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:11px 13px;
-    backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);box-shadow:var(--shadow);position:relative;overflow:hidden;}
-  .plan-strip .pcell::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--mc,var(--accent));}
-  .plan-strip .pcell .pk{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);font-weight:600;}
-  .plan-strip .pcell .pv{font-size:19px;font-weight:700;margin-top:3px;letter-spacing:-.02em;line-height:1.1;}
-  .plan-strip .pcell .pv small{font-size:11.5px;color:var(--muted2);font-weight:600;}
+  .plan-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0 6px;}
+  .plan-strip .pcell{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:13px 12px;
+    backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);box-shadow:var(--shadow);position:relative;overflow:hidden;min-height:78px;display:flex;flex-direction:column;}
+  .plan-strip .pcell.ms{cursor:pointer;transition:border-color .18s;}
+  .plan-strip .pcell.ms:active{border-color:var(--gold);}
+  .plan-strip .pcell .pk{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2);font-weight:600;line-height:1.3;
+    overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-height:24px;}
+  .plan-strip .pcell .pv{font-size:24px;font-weight:700;margin-top:auto;letter-spacing:-.02em;line-height:1.05;}
+  .plan-strip .pcell .pv.sm{font-size:18px;}
   .plan-strip .pcell .psub{font-size:10px;color:var(--muted2);margin-top:2px;font-weight:500;}
   .pv.green{color:var(--accent);} .pv.warn{color:var(--warn);} .pv.gold{color:var(--gold);} .pv.blue{color:#7fb4f0;}
 
-  .plan-filters{display:flex;gap:6px;flex-wrap:wrap;margin:12px 2px 10px;}
-  .plan-filters button{background:var(--glass-soft);border:1px solid var(--line2);color:var(--muted);font-family:inherit;font-weight:600;font-size:12px;
-    padding:7px 13px;border-radius:999px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px;}
+
+  .plan-filters{display:flex;gap:5px;margin:12px 0 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .plan-filters::-webkit-scrollbar{display:none;}
+  .plan-filters button{flex:1 1 0;white-space:nowrap;background:var(--glass-soft);border:1px solid var(--line2);color:var(--muted);font-family:inherit;font-weight:600;font-size:11.5px;
+    padding:7px 6px;border-radius:999px;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;}
   .plan-filters button.active{background:var(--glass-strong);color:var(--ink);border-color:var(--line);}
-  .plan-filters button .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .plan-filters button .dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex:none;}
 
   /* mode toggle */
   .plan-mode{display:flex;gap:5px;background:var(--glass-soft);padding:4px;border-radius:13px;border:1px solid var(--line2);margin:0 2px 12px;}
   .plan-mode button{flex:1;background:transparent;border:none;color:var(--muted);font-family:inherit;font-weight:600;font-size:12.5px;padding:9px;border-radius:10px;cursor:pointer;transition:all .2s;}
   .plan-mode button.active{background:var(--glass-strong);color:var(--ink);}
 
-  /* Gantt */
-  .gantt{background:var(--glass);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  /* Gantt — alleen kijken, horizontaal scrollbaar t/m 1 aug */
+  .gantt{background:var(--glass);border:1px solid var(--line);border-radius:18px;overflow:visible;position:relative;
     backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);box-shadow:var(--shadow);}
-  .gantt-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;}
-  .gantt-inner{position:relative;}
-  /* week header */
-  .gantt-head{display:flex;position:sticky;top:0;z-index:3;background:var(--glass-strong);border-bottom:1px solid var(--line);}
-  .gantt-head .gh-label{flex:none;width:var(--labelw);position:sticky;left:0;z-index:4;background:var(--glass-strong);
+  .gantt-headwrap{position:sticky;top:0;z-index:8;overflow:hidden;border-radius:18px 18px 0 0;border-bottom:1px solid var(--line);background:#2c2723;}
+  .gantt-headwrap .gh-label-fixed{position:absolute;left:0;top:0;bottom:0;z-index:9;width:var(--labelw);background:#2c2723;
     border-right:1px solid var(--line);font-size:9.5px;color:var(--muted2);font-weight:600;text-transform:uppercase;letter-spacing:.08em;
     display:flex;align-items:center;padding:0 12px;}
+  .gantt-scroll{overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;}
+  .gantt-inner{position:relative;}
+  .gantt-head{display:flex;background:#2c2723;}
+  .gantt-head .gh-label{flex:none;width:var(--labelw);}
   .gantt-head .gh-weeks{display:flex;}
-  .gh-week{flex:none;text-align:center;padding:7px 0 6px;border-left:1px solid var(--line2);font-weight:600;}
-  .gh-week .gw-no{font-size:10.5px;color:var(--muted);} 
-  .gh-week .gw-dates{font-size:9px;color:var(--muted2);margin-top:1px;font-weight:500;letter-spacing:0;}
+  .gh-week{flex:none;text-align:center;padding:7px 0 6px;border-left:1px solid var(--line2);font-weight:600;box-sizing:border-box;}
+  .gh-week .gw-no{font-size:10px;color:var(--muted);}
+  .gh-week .gw-dates{font-size:9px;color:var(--muted2);margin-top:1px;font-weight:500;white-space:nowrap;}
   .gh-week.now{background:var(--accent-dim);}
+  .gh-week.now .gw-no{color:var(--accent);}
 
-  /* today line */
-  .gantt-today{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);z-index:2;pointer-events:none;opacity:.8;}
+  .gantt-today{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);z-index:3;pointer-events:none;opacity:.95;}
   .gantt-today::before{content:"vandaag";position:absolute;top:2px;left:4px;font-size:8.5px;color:var(--accent);font-weight:700;white-space:nowrap;}
+  .gantt-nowweek{position:absolute;top:0;bottom:0;background:var(--accent-dim);opacity:.5;z-index:1;pointer-events:none;}
+  /* expliciete weekrasterlijnen, exact uitgelijnd met de header */
+  .gantt-grid{position:absolute;top:0;bottom:0;z-index:1;pointer-events:none;}
+  .gantt-grid i{position:absolute;top:0;bottom:0;width:1px;background:var(--line2);opacity:.6;}
 
   .gantt-rows{position:relative;}
   .grow{display:flex;align-items:center;height:46px;border-top:1px solid var(--line2);position:relative;}
   .grow:first-child{border-top:none;}
-  .grow .g-label{flex:none;width:var(--labelw);position:sticky;left:0;z-index:2;background:var(--glass);
+  /* sticky labelkolom: vrijwel dicht, alleen vage gloed van de balken schijnt door */
+  .grow .g-label{flex:none;width:var(--labelw);position:sticky;left:0;z-index:5;
+    background:rgba(40,36,32,.86);backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%);
     border-right:1px solid var(--line);padding:0 10px 0 13px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:2px;}
-  .grow .g-label .gl-t{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.2;
+  .grow .g-label .gl-t{font-size:11px;font-weight:600;color:var(--ink);line-height:1.2;
     overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+  .grow .g-label .gl-t .ms-dot{color:var(--gold);font-size:9px;}
   .grow .g-label .gl-d{font-size:9px;color:var(--muted2);font-weight:500;display:flex;align-items:center;gap:4px;}
+  .grow .g-label .gl-d .dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+  .grow.done{background:rgba(95,208,122,.07);}
   .grow.done .gl-t{text-decoration:line-through;color:var(--muted2);}
+  .grow.done .g-label{background:rgba(40,46,40,.88);}
   .g-track{position:relative;height:100%;flex:1;}
-  /* faint week gridlines on track via repeating gradient set inline */
 
-  .gbar{position:absolute;top:9px;height:28px;border-radius:9px;cursor:grab;touch-action:none;
-    display:flex;align-items:center;padding:0 8px;gap:6px;overflow:hidden;
-    background:var(--bar-c);border:1px solid var(--bar-bd);box-shadow:0 2px 8px rgba(0,0,0,.22);transition:box-shadow .15s;}
-  .gbar:active{cursor:grabbing;}
-  .gbar.dragging{box-shadow:0 6px 18px rgba(0,0,0,.4);z-index:5;opacity:.95;}
-  .gbar .gb-txt{font-size:10.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .gbar .gb-handle{position:absolute;top:0;bottom:0;width:14px;cursor:ew-resize;touch-action:none;}
-  .gbar .gb-handle.l{left:0;} .gbar .gb-handle.r{right:0;}
-  .gbar.s-done{opacity:.55;}
-  .gbar.s-busy{box-shadow:0 0 0 2px var(--warn) inset, 0 2px 8px rgba(0,0,0,.22);}
-  .gbar .gb-check{flex:none;width:15px;height:15px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);
+  .gbar{position:absolute;top:9px;height:28px;border-radius:9px;display:flex;align-items:center;gap:6px;padding:0 8px;
+    background:var(--bar-c);border:1px solid var(--bar-bd);box-shadow:0 2px 8px rgba(0,0,0,.2);}
+  .gbar .gb-check{flex:none;width:15px;height:15px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);
     display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;}
+  .gbar .gb-txt.in{font-size:10.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .gbar .gb-txt.out{position:absolute;top:50%;transform:translateY(-50%);font-size:10.5px;font-weight:600;color:var(--ink);white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.5);}
+  .gbar.s-done{opacity:.55;}
   .gbar.s-done .gb-check{background:#fff;color:var(--accent-ink);border-color:#fff;}
+  .gbar.s-busy{box-shadow:0 0 0 2px var(--warn) inset,0 2px 8px rgba(0,0,0,.2);}
   .gbar.s-busy .gb-check{border-color:#fff;color:#fff;}
 
-  /* milestone diamond */
-  .gms{position:absolute;top:50%;width:20px;height:20px;transform:translate(-50%,-50%) rotate(45deg);
-    background:var(--gold);border:1.5px solid #fff3d6;box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:grab;touch-action:none;z-index:4;border-radius:3px;}
-  .gms.dragging{box-shadow:0 6px 18px rgba(0,0,0,.45);}
-  .gms.s-done{opacity:.5;}
+  .gms{position:absolute;top:50%;left:0;width:22px;height:22px;transform:translate(-50%,-50%) rotate(45deg);
+    background:var(--gold);border:1.5px solid #fff3d6;box-shadow:0 2px 8px rgba(0,0,0,.3);z-index:2;border-radius:4px;
+    display:flex;align-items:center;justify-content:center;}
+  .gms .gms-check{transform:rotate(-45deg);font-size:11px;color:var(--accent-ink);font-weight:800;}
+  .gms.s-done{background:var(--accent);border-color:#d6f5dd;}
   .gms-flag{position:absolute;top:50%;transform:translateY(-50%);font-size:10px;font-weight:700;color:var(--gold);white-space:nowrap;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.5);}
+  .gantt-hint{font-size:10px;color:var(--muted2);text-align:center;padding:9px 12px;line-height:1.5;border-top:1px solid var(--line2);}
 
-  .gantt-hint{font-size:10.5px;color:var(--muted2);text-align:center;padding:9px 12px;line-height:1.5;border-top:1px solid var(--line2);}
+  /* ===== Lijst-weergave (werkplek, Projecten-stijl) ===== */
+  .pl-phase{margin-bottom:18px;}
+  .pl-phead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 4px 7px;}
+  .pl-pname{font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;cursor:pointer;
+    background:transparent;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:6px;padding:3px 0;}
+  .pl-pname .pl-pen{font-size:11px;color:var(--muted2);opacity:.7;}
+  .pl-pname:active{color:var(--accent);}
+  .pl-pmeta{font-size:11px;color:var(--muted2);font-weight:600;font-variant-numeric:tabular-nums;}
+  .pl-pbar{height:4px;border-radius:3px;background:var(--glass-soft);overflow:hidden;margin:0 4px 10px;}
+  .pl-pbar i{display:block;height:100%;background:var(--accent);transition:width .4s;}
+  .pl-empty{font-size:11.5px;color:var(--muted2);text-align:center;padding:10px;border:1px dashed var(--line2);border-radius:12px;}
 
-  /* list mode reused cards */
-  .phase{margin-bottom:14px;}
-  .phase-head{display:flex;align-items:baseline;gap:8px;padding:4px 4px 8px;}
-  .phase-head .pt{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.01em;}
-  .phase-head .pw{font-size:10.5px;color:var(--muted2);font-weight:600;letter-spacing:.04em;}
-  .phase-bar{height:4px;border-radius:3px;background:var(--glass-soft);overflow:hidden;margin:0 4px 9px;}
-  .phase-bar i{display:block;height:100%;background:var(--accent);transition:width .4s;}
-  .task{background:var(--glass);border:1px solid var(--line);border-radius:16px;margin-bottom:8px;overflow:hidden;
-    backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);box-shadow:var(--shadow);position:relative;}
-  .task::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--owner-c,var(--accent-dim));}
-  .task.done{opacity:.6;}
-  .task-main{display:flex;align-items:flex-start;gap:11px;padding:13px 15px 13px 16px;}
-  .task-check{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);background:transparent;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent;transition:all .18s;margin-top:1px;}
-  .task-check.s-busy{border-color:var(--warn);color:var(--warn);}
-  .task-check.s-done{border-color:var(--accent);background:var(--accent-dim);color:var(--accent);}
-  .task-body{flex:1;min-width:0;}
-  .task-title{font-size:13.5px;font-weight:600;line-height:1.35;color:var(--ink);}
-  .task.done .task-title{text-decoration:line-through;text-decoration-color:var(--muted2);}
-  .task-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center;}
-  .chip{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);background:var(--glass-soft);color:var(--muted);display:inline-flex;align-items:center;gap:5px;}
-  .chip .dot{width:7px;height:7px;border-radius:50%;}
-  .chip.wk{color:var(--muted2);}
-  .task-block{font-size:10.5px;font-weight:600;color:var(--danger);margin-top:7px;display:flex;align-items:center;gap:5px;}
-  .task-note{font-size:11px;color:var(--muted2);line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid var(--line2);}
-  .task-note b{color:var(--muted);font-weight:600;}
-  .milestone{background:linear-gradient(135deg,rgba(240,217,160,.14),var(--glass));border-color:rgba(240,217,160,.3);}
-  .milestone .task-title{color:var(--gold);}
-  .milestone .task-title::before{content:"◆ ";color:var(--gold);}
+  /* drop-indicator tijdens slepen */
+  .pl-dropline{height:0;border-top:2px solid var(--accent);margin:2px 0;border-radius:2px;box-shadow:0 0 8px var(--accent-dim);}
+  .pl-list.drop-target{outline:2px dashed var(--accent-dim);outline-offset:2px;border-radius:14px;}
 
-  /* date inputs in sheet */
+  /* swipe-to-delete */
+  .pl-swipe{position:relative;margin-bottom:8px;border-radius:15px;}
+  .pl-swipe-bg{position:absolute;inset:0;border-radius:15px;display:flex;align-items:center;justify-content:flex-end;
+    padding-right:22px;overflow:hidden;opacity:0;transition:opacity .15s;
+    background:linear-gradient(90deg,rgba(214,90,98,.18),rgba(214,90,98,.42));}
+  .pl-swipe-bg span{color:#f4c4c8;font-weight:700;font-size:13px;letter-spacing:.02em;}
+  .pl-swipe.arming .pl-swipe-bg{background:linear-gradient(90deg,rgba(214,90,98,.3),rgba(214,90,98,.6));}
+  .pl-swipe.arming .pl-swipe-bg span{color:#fff;}
+  /* kaart krijgt ondoorzichtige basis zodat de rode laag er niet doorheen schijnt in ruststand */
+  .pl-swipe .pl-card{margin-bottom:0;position:relative;z-index:1;touch-action:pan-y;
+    background:linear-gradient(var(--glass),var(--glass)),var(--bg);}
+  .pl-swipe .pl-card.is-ms{background:linear-gradient(120deg,rgba(240,217,160,.12),var(--glass)),var(--bg);}
+
+  .pl-card{display:flex;align-items:center;gap:10px;background:var(--glass);border:1px solid var(--line);border-radius:15px;
+    padding:13px 14px;position:relative;overflow:hidden;cursor:pointer;
+    backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:var(--shadow);}
+  .pl-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--oc,var(--accent-dim));}
+  .pl-card.done{}
+  .pl-card.done .pl-main,.pl-card.done .pl-bookmark{opacity:.6;}
+  .pl-swipe .pl-card.done{background:linear-gradient(rgba(95,208,122,.06),rgba(95,208,122,.06)),var(--bg);}
+  .pl-card.is-ms{border-color:rgba(240,217,160,.5);background:linear-gradient(120deg,rgba(240,217,160,.12),var(--glass));}
+  .pl-card.pl-dragging{z-index:50;box-shadow:0 12px 36px rgba(0,0,0,.4);opacity:.97;cursor:grabbing;}
+  .pl-card .pl-drag{flex:none;display:flex;align-items:center;color:var(--muted2);opacity:.4;font-size:16px;cursor:grab;touch-action:none;
+    user-select:none;-webkit-user-select:none;margin-left:-3px;}
+  .pl-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;padding-right:8px;}
+  .pl-name{font-size:14px;font-weight:600;color:var(--ink);line-height:1.25;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:22px;}
+  .pl-card.done .pl-name{text-decoration:line-through;text-decoration-color:var(--muted2);color:var(--muted);}
+  .pl-owner{font-size:11.5px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:6px;}
+  .pl-owner .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .pl-dates{font-size:11px;color:var(--muted2);font-weight:500;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:8px;}
+  .pl-ms-tag{font-size:8.5px;font-weight:700;color:var(--accent-ink);background:var(--gold);letter-spacing:.04em;text-transform:uppercase;padding:2px 6px;border-radius:5px;}
+  /* mijlpaal-bookmark rechtsboven */
+  .pl-bookmark{position:absolute;top:0;right:13px;width:26px;height:32px;background:transparent;border:none;cursor:pointer;padding:0;z-index:3;
+    display:flex;align-items:flex-start;justify-content:center;}
+  .pl-bookmark svg{fill:var(--line2);stroke:var(--muted2);stroke-width:1.3;transition:all .18s;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2));}
+  .pl-bookmark.on svg{fill:var(--gold);stroke:#fff3d6;}
+  .pl-bookmark:active{transform:translateY(1px);}
+  .pl-status{flex:none;align-self:center;min-width:64px;text-align:center;font-family:inherit;font-weight:700;font-size:11px;
+    letter-spacing:.02em;padding:9px 12px;border-radius:11px;cursor:pointer;border:1px solid var(--line2);
+    color:var(--sc);background:var(--sbg);transition:all .15s;}
+  .pl-status:active{transform:scale(.94);}
+
+  .lnk-btn{background:transparent;border:none;color:var(--accent);font-family:inherit;font-weight:600;font-size:12px;cursor:pointer;padding:6px 2px;margin-top:-4px;}
+  .del-btn{width:100%;background:rgba(242,166,173,.14);color:var(--danger);border:1px solid rgba(242,166,173,.25);
+    font-family:inherit;font-weight:600;font-size:14px;padding:14px;border-radius:15px;margin-top:8px;cursor:pointer;transition:background .15s;box-shadow:none;}
+  .del-btn:active{background:rgba(242,166,173,.22);}
+  .date-hint{font-size:10.5px;color:var(--muted2);margin:7px 2px 0;line-height:1.4;}
+
+  /* date inputs + owner keuze in sheet */
   .date-row{display:flex;gap:10px;}
   .date-row .field{flex:1;}
   input[type=date]{color-scheme:dark;}
   .own-row{display:flex;gap:6px;flex-wrap:wrap;}
-  .own-row .own-btn{flex:1;min-width:70px;background:var(--glass-soft);border:1px solid var(--line);color:var(--muted);font-family:inherit;font-weight:600;font-size:12.5px;
+  .own-row .own-btn{flex:1;min-width:70px;background:var(--glass-soft);border:1px solid var(--line);color:var(--muted);font-family:inherit;font-weight:600;font-size:12px;
     padding:10px 6px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .18s;}
   .own-row .own-btn .dot{width:9px;height:9px;border-radius:50%;}
   .own-row .own-btn.active{background:var(--glass-strong);color:var(--ink);border-color:var(--oc);}
+
+  /* eigen kalender */
+  .cal{background:var(--glass-soft);border:1px solid var(--line);border-radius:14px;padding:9px 9px 10px;max-width:340px;margin:0 auto;}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+  .cal-title{font-size:12.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;}
+  .cal-nav{width:27px;height:27px;border-radius:8px;background:var(--glass);border:1px solid var(--line2);color:var(--muted);
+    font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+  .cal-nav:active{transform:scale(.9);}
+  .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:3px;}
+  .cal-dow span{text-align:center;font-size:9px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.03em;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+  .cd{aspect-ratio:1;border:none;background:transparent;color:var(--ink);font-family:inherit;font-size:12px;font-weight:500;
+    border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s,color .12s;position:relative;}
+  .cd.empty{pointer-events:none;}
+  .cd:not(.empty):active{transform:scale(.92);}
+  .cd.in{background:var(--accent-dim);border-radius:0;}
+  .cd.start{background:var(--accent);color:var(--accent-ink);font-weight:700;border-radius:8px 0 0 8px;}
+  .cd.end{background:var(--accent);color:var(--accent-ink);font-weight:700;border-radius:0 8px 8px 0;}
+  .cd.single{border-radius:8px;}
+  .cal-sum{font-size:11px;color:var(--muted);font-weight:500;margin-top:7px;text-align:center;}
 
   .fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + var(--safe-bottom));z-index:40;
     background:var(--glass-strong);color:var(--ink);border:1px solid rgba(255,255,255,.22);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:14.5px;
@@ -402,8 +483,14 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow">Hagestraat</div>
-    <h1 id="hTitle">Vermogensmodel</h1>
+    <div class="head-left">
+      <div class="eyebrow">Hagestraat</div>
+      <h1 id="hTitle">Vermogensmodel</h1>
+    </div>
+    <div class="head-right">
+      <button class="eye-btn" id="eyeBtn" aria-label="Bedragen verbergen" title="Bedragen verbergen"></button>
+      <div class="intrek-badge" id="intrekBadge"></div>
+    </div>
   </header>
   <div class="tabs">
     <button data-tab="model" class="active">Vermogen</button>
@@ -437,10 +524,9 @@
   </div>
 
   <div class="view" id="view-plan">
-    <div class="plan-strip" id="planStrip"></div>
     <div class="plan-mode" id="planMode">
-      <button data-m="gantt" class="active">📊 Tijdlijn</button>
-      <button data-m="list">☰ Lijst</button>
+      <button data-m="gantt">Tijdlijn</button>
+      <button data-m="list" class="active">Lijst</button>
     </div>
     <div class="plan-filters" id="planFilters"></div>
     <div id="planBody"></div>
@@ -448,8 +534,7 @@
 
   <div class="footlink">
     <a id="openSettings">⚙ Startvermogen &amp; buffer</a><br><br>
-    <a id="exportBtn">⬇ Back-up downloaden</a> &nbsp;·&nbsp; <a id="importBtn">⬆ Back-up terugzetten</a><br><br>
-    <a id="resetBtn">↺ Reset naar oorspronkelijke Excel-data</a>
+    <a id="exportBtn">⬇ Back-up downloaden</a> &nbsp;·&nbsp; <a id="importBtn">⬆ Back-up terugzetten</a>
   </div>
   <input type="file" id="importFile" accept="application/json,.json" style="display:none">
 </div>
@@ -971,6 +1056,7 @@ function defaultState(){
       {"id":"p32","phase":"D","title":"Binnen klaar → spullen overbrengen","owner":"jij","start":"2026-07-30","end":"2026-07-31","status":"open","milestone":true,"note":"Pas ná vloer + keuken + binnenafwerking."},
       {"id":"p33","phase":"D","title":"Intrek","owner":"jij","start":"2026-08-01","end":"2026-08-01","status":"open","milestone":true,"note":"1 augustus (doel)."}
     ],
+    "phaseNames": {"A":"Voorbereiding & afspraken","B":"Jaspers werk in juni","C":"Vloer & keuken","D":"Afwerking & intrek"},
     "housePrice": 450000
   };
 }
@@ -979,7 +1065,8 @@ const KEY='hagestraat_v2';
 let S=load();
 function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):defaultState();}catch(e){return defaultState();}}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
-function euro(n){const neg=n<0;n=Math.abs(Math.round(n));return (neg?'−€':'€')+n.toLocaleString('nl-NL');}
+function euroPlain(n){const neg=n<0;n=Math.abs(Math.round(n));return (neg?'−€':'€')+n.toLocaleString('nl-NL');}
+function euro(n){return '<span class="amt">'+euroPlain(n)+'</span>';}
 function uid(){return 'x'+Date.now()+Math.floor(Math.random()*999);}
 function todayISO(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function monthFromDate(iso){ if(!iso)return null; const mm=parseInt(iso.slice(5,7),10); return MONTHS[mm-1]||null; }
@@ -1019,11 +1106,11 @@ function buildModel(){
 function renderModel(){
   const rows=buildModel();
   const nowIdx=MONTHS.indexOf(CURRENT_MONTH);
-  document.getElementById('sStart').textContent=euro(S.start);
-  document.getElementById('sBuffer').textContent=euro(S.buffer);
+  document.getElementById('sStart').innerHTML=euro(S.start);
+  document.getElementById('sBuffer').innerHTML=euro(S.buffer);
   const end=rows[11];
   const sEnd=document.getElementById('sEnd');
-  sEnd.textContent=euro(end.end); sEnd.className='v '+(end.end<0?'neg':(end.end<S.buffer?'warn':'green'));
+  sEnd.innerHTML=euro(end.end); sEnd.className='v '+(end.end<0?'neg':(end.end<S.buffer?'warn':'green'));
   const box=document.getElementById('modelRows');box.innerHTML='';
   const pastCount = Math.max(0, rows.findIndex(r=>MONTHS.indexOf(r.m)===nowIdx));
   // container voor voorbije maanden (standaard ingeklapt)
@@ -1195,6 +1282,7 @@ function renderHouse(){
 }
 function openEditHouse(){
   document.getElementById('sheetTitle').textContent='Aankoop woning';
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
   document.getElementById('sheetSub').textContent='De koopprijs. Aftrekposten stel je per project in (onderdelen die je zelf doet).';
   document.getElementById('formArea').innerHTML=`
     <div class="field"><label>Koopprijs (€)</label><input type="number" id="hPrice" inputmode="decimal" value="${+S.housePrice||0}"></div>
@@ -1228,7 +1316,7 @@ function renderProj(){
     const payBadge = payState==='all'
       ? `<span class="paybadge all">✓ Betaald</span>`
       : (payState==='some' ? `<span class="paybadge some">${paidN}/${n} betaald</span>` : '');
-    const deductBadge = (+p.deduction||0)>0 ? `<span class="paybadge deduct" title="Telt mee in de huisaftrek">− huis ${euro(p.deduction)}</span>` : '';
+    const deductBadge = (+p.deduction||0)>0 ? `<span class="paybadge deduct" title="Telt mee in de huisaftrek">− huis ${euroPlain(p.deduction)}</span>` : '';
     const badges = `${payBadge}${deductBadge}`;
     const el=document.createElement('div'); el.className='card proj'+(openProjects.has(p.id)?' open':'')+(payState==='all'?' allpaid':''); el.setAttribute('data-projid',p.id);
     el.innerHTML=`
@@ -1311,18 +1399,17 @@ const OWNERS={
   jasper:{label:'Jasper',c:'#5fd07a',bar:'rgba(95,208,122,.30)',bd:'rgba(95,208,122,.6)'},
   mats:{label:'Mats',c:'#7fb4f0',bar:'rgba(127,180,240,.30)',bd:'rgba(127,180,240,.6)'},
   jij:{label:'Jij',c:'#f0d9a0',bar:'rgba(240,217,160,.30)',bd:'rgba(240,217,160,.6)'},
-  gedeeld:{label:'Gedeeld',c:'#f3a6c4',bar:'rgba(243,166,196,.30)',bd:'rgba(243,166,196,.6)'}
+  gedeeld:{label:'Anders',c:'#f3a6c4',bar:'rgba(243,166,196,.30)',bd:'rgba(243,166,196,.6)'}
 };
-const PHASES=[
-  {id:'A',title:'Voorbereiding & afspraken'},
-  {id:'B',title:'Jaspers werk in juni'},
-  {id:'C',title:'Vloer & keuken'},
-  {id:'D',title:'Afwerking & intrek'}
-];
+const DEFAULT_PHASE_ORDER=['A','B','C','D'];
+const DEFAULT_PHASE_NAMES={A:'Voorbereiding & afspraken',B:'Jaspers werk in juni',C:'Vloer & keuken',D:'Afwerking & intrek'};
+function phaseOrder(){ ensurePlan(); return S.phaseOrder; }
+function phaseName(id){ ensurePlan(); return (S.phaseNames&&S.phaseNames[id])||DEFAULT_PHASE_NAMES[id]||('Lijst '+id); }
+const STATUS_META={open:{l:'Open',c:'var(--muted2)',bg:'var(--glass-soft)'},busy:{l:'Loopt',c:'var(--warn)',bg:'rgba(232,168,90,.15)'},done:{l:'Klaar',c:'var(--accent)',bg:'var(--accent-dim)'}};
 const STATUS_NEXT={open:'busy',busy:'done',done:'open'};
 const INTREK_ISO='2026-08-01';
 let planFilter='all';
-let planMode='gantt'; // gantt | list
+let planMode='list'; // list (werkplek) | gantt (alleen kijken)
 
 // --- datum helpers ---
 const DAY=86400000;
@@ -1339,13 +1426,14 @@ function fmtRange(s,e){ if(s===e) return fmtLong(s); return fmtShort(s)+' – '+
 
 function ensurePlan(){ if(!S.plan){ S.plan=defaultState().plan; persist(); }
   // migratie van oude 'wk' data
-  S.plan.forEach(t=>{ if(!t.start){ t.start='2026-06-08'; t.end='2026-06-08'; } if(!t.end) t.end=t.start; });
+  S.plan.forEach(t=>{ if(!t.start){ t.start='2026-06-08'; t.end='2026-06-08'; } if(!t.end) t.end=t.start; if(!t.phase) t.phase='A'; });
+  if(!S.phaseNames) S.phaseNames=Object.assign({},DEFAULT_PHASE_NAMES);
+  if(!S.phaseOrder) S.phaseOrder=DEFAULT_PHASE_ORDER.slice();
+  // zorg dat elke gebruikte fase ook in de volgorde staat
+  S.plan.forEach(t=>{ if(t.phase && S.phaseOrder.indexOf(t.phase)<0) S.phaseOrder.push(t.phase); });
 }
-function planVisible(){ ensurePlan(); return S.plan.filter(t=>{
-  if(planFilter==='all') return true;
-  if(planFilter==='open') return t.status!=='done';
-  return t.owner===planFilter;
-}); }
+function planVisible(){ ensurePlan(); return S.plan.filter(t=> planFilter==='all' || t.owner===planFilter ); }
+function planVisibleOwner(t){ return planFilter==='all' || t.owner===planFilter; }
 
 // laatste einddatum van een groep taken (voor mijlpaal-tellers)
 function groupEnd(pred){ const ts=S.plan.filter(pred); if(!ts.length) return null;
@@ -1353,28 +1441,13 @@ function groupEnd(pred){ const ts=S.plan.filter(pred); if(!ts.length) return nul
 
 function renderPlan(){
   ensurePlan();
-  // ---- mijlpaal-tellers ----
-  const strip=document.getElementById('planStrip');
-  const jasperEnd=groupEnd(t=>t.owner==='jasper');
-  const matsEnd=groupEnd(t=>t.owner==='mats');
-  const vloer=S.plan.find(t=>/vloer leggen/i.test(t.title));
-  const vloerEnd=vloer?vloer.end:null;
-  const now=new Date(); now.setHours(0,0,0,0);
-  const dagen=Math.max(0,Math.ceil((pd(INTREK_ISO)-now)/DAY));
-  const cell=(k,val,sub,cls,mc)=>`<div class="pcell" style="--mc:${mc}"><div class="pk">${k}</div>
-    <div class="pv ${cls}">${val}</div><div class="psub">${sub||''}</div></div>`;
-  strip.innerHTML=
-    cell('Klaar met Jasper', jasperEnd?fmtShort(jasperEnd):'—', jasperEnd?DOW[pd(jasperEnd).getDay()]:'','green',OWNERS.jasper.c)+
-    cell('Klaar met Mats', matsEnd?fmtShort(matsEnd):'—', matsEnd?DOW[pd(matsEnd).getDay()]:'','blue',OWNERS.mats.c)+
-    cell('Vloer gelegd', vloerEnd?fmtShort(vloerEnd):'—', vloerEnd?DOW[pd(vloerEnd).getDay()]:'','warn','#f3c98b')+
-    cell('Dagen tot intrek', dagen, '1 aug','gold',OWNERS.jij.c);
-
+  renderIntrekBadge();
   // ---- filters ----
   const fil=document.getElementById('planFilters');
   const fbtn=(id,label,color)=>`<button data-f="${id}" class="${planFilter===id?'active':''}">${color?`<span class="dot" style="background:${color}"></span>`:''}${label}</button>`;
-  fil.innerHTML=fbtn('all','Alles')+fbtn('open','Nog te doen')
+  fil.innerHTML=fbtn('all','Alles')
     +fbtn('jasper','Jasper',OWNERS.jasper.c)+fbtn('mats','Mats',OWNERS.mats.c)
-    +fbtn('jij','Jij',OWNERS.jij.c)+fbtn('gedeeld','Gedeeld',OWNERS.gedeeld.c);
+    +fbtn('jij','Jij',OWNERS.jij.c)+fbtn('gedeeld','Anders',OWNERS.gedeeld.c);
   fil.querySelectorAll('button').forEach(b=>b.onclick=()=>{planFilter=b.dataset.f;renderPlan();});
 
   // ---- mode toggle ----
@@ -1387,94 +1460,112 @@ function renderPlan(){
   else renderPlanList();
 }
 
-// ===== GANTT =====
-const COLW=58; // px per dag-as? -> we tekenen per week; dag = COLW/7
+// ===== GANTT (alleen kijken) =====
 function renderGantt(){
   const vis=planVisible().slice().sort((a,b)=> a.start===b.start ? daysBetween(b.start,b.end)-daysBetween(a.start,a.end) : (a.start<b.start?-1:1));
   const body=document.getElementById('planBody');
   if(!vis.length){ body.innerHTML=`<div class="intro" style="text-align:center">Niets in deze filter.</div>`; return; }
 
-  // tijdvenster: maandag vóór vroegste start t/m zondag ná laatste eind (incl. intrek)
-  let minISO=vis.reduce((m,t)=>t.start<m?t.start:m,vis[0].start);
   let maxISO=vis.reduce((m,t)=>t.end>m?t.end:m,vis[0].end);
   if(INTREK_ISO>maxISO) maxISO=INTREK_ISO;
-  const startMon=mondayOf(pd(minISO));
-  const endD=pd(maxISO); const lastSun=mondayOf(endD); lastSun.setDate(lastSun.getDate()+6);
+  // venster: ma week 23 (1 jun 2026) t/m zo week 33 (16 aug 2026)
+  const WK23_MON='2026-06-01', WK33_SUN='2026-08-16';
+  let startMon=mondayOf(pd(WK23_MON));
+  let lastSun=pd(WK33_SUN);
+  // als een taak verder loopt, rek mee
+  const endD=pd(maxISO); const es=mondayOf(endD); es.setDate(es.getDate()+6);
+  if(es>lastSun) lastSun=es;
   const totalDays=Math.round((lastSun-startMon)/DAY)+1;
   const weeks=Math.ceil(totalDays/7);
-  const dayPx=COLW/7;
-  const trackW=totalDays*dayPx;
-  const LABELW=128;
+  const COLW=70; const dayPx=COLW/7;
+  const PADL=20; // extra ruimte links binnen de track
+  const trackW=totalDays*dayPx+PADL;
+  const LABELW=120;
 
-  // week-header
-  let wh='';
+  const todayMid=new Date(); todayMid.setHours(0,0,0,0);
+  let wh='', nowWeekLeft=null;
   for(let w=0;w<weeks;w++){
     const wkStart=new Date(startMon); wkStart.setDate(wkStart.getDate()+w*7);
     const wkEnd=new Date(wkStart); wkEnd.setDate(wkEnd.getDate()+6);
-    const isNow=(new Date()>=wkStart && new Date()<=new Date(wkEnd.getTime()+DAY));
-    const wkNo=isoWeek(wkStart);
-    wh+=`<div class="gh-week ${isNow?'now':''}" style="width:${COLW}px">
-      <div class="gw-no">wk ${wkNo}</div>
-      <div class="gw-dates">${wkStart.getDate()} ${MON_SHORT[wkStart.getMonth()]}–${wkEnd.getDate()} ${MON_SHORT[wkEnd.getMonth()]}</div>
+    const isNow=(todayMid>=wkStart && todayMid<=wkEnd);
+    if(isNow) nowWeekLeft=PADL+w*7*dayPx;
+    const sameMonth=wkStart.getMonth()===wkEnd.getMonth();
+    const dates = sameMonth ? `${wkStart.getDate()}–${wkEnd.getDate()} ${MON_SHORT[wkStart.getMonth()]}`
+                            : `${wkStart.getDate()} ${MON_SHORT[wkStart.getMonth()]}–${wkEnd.getDate()} ${MON_SHORT[wkEnd.getMonth()]}`;
+    wh+=`<div class="gh-week ${isNow?'now':''}" style="width:${COLW}px${w===0?';margin-left:'+PADL+'px':''}">
+      <div class="gw-no">wk ${isoWeek(wkStart)}</div>
+      <div class="gw-dates">${dates}</div>
     </div>`;
   }
-  // weekstrepen achtergrond op track
-  const gridBg=`background-image:repeating-linear-gradient(90deg,var(--line2) 0,var(--line2) 1px,transparent 1px,transparent ${COLW}px);`;
+  const nowBand = nowWeekLeft!=null ? `<div class="gantt-nowweek" style="left:${LABELW+nowWeekLeft}px;width:${COLW}px"></div>` : '';
+  const todayOff=PADL + Math.max(0,Math.round((todayMid-startMon)/DAY))*dayPx + dayPx/2;
+  // weekrasterlijnen exact op de header-grenzen (PADL + w*COLW)
+  let gridLines='';
+  for(let w=0;w<=weeks;w++){ gridLines+=`<i style="left:${LABELW+PADL+w*COLW}px"></i>`; }
 
-  // today offset
-  const todayOff=Math.max(0,Math.round((new Date().setHours(0,0,0,0)-startMon)/DAY))*dayPx;
-
-  // rijen
   let rows='';
   for(const t of vis){
     const o=OWNERS[t.owner]||OWNERS.jij;
     const offStart=daysBetween(toISO(startMon),t.start);
     const dur=Math.max(0,daysBetween(t.start,t.end))+1;
-    const left=offStart*dayPx;
+    const left=PADL+offStart*dayPx;
     const sc=t.status==='done'?'s-done':t.status==='busy'?'s-busy':'';
     let barHtml;
     if(t.milestone){
       const cx=left + (dur*dayPx)/2;
-      barHtml=`<div class="gms ${sc}" data-id="${t.id}" style="left:${cx}px"></div>
-        <div class="gms-flag" style="left:${cx+14}px">${fmtShort(t.start)}</div>`;
+      const flagLeft = cx > trackW-90;
+      barHtml=`<div class="gms ${sc}" style="left:${cx}px">${t.status==='done'?'<span class="gms-check">✓</span>':''}</div>
+        <div class="gms-flag" style="${flagLeft?`right:${trackW-cx+16}px`:`left:${cx+16}px`}">${escapeHtml(shortTitle(t.title))}</div>`;
     } else {
-      const w=Math.max(dur*dayPx,26);
-      barHtml=`<div class="gbar ${sc}" data-id="${t.id}" style="left:${left}px;width:${w}px;--bar-c:${o.bar};--bar-bd:${o.bd}">
-        <div class="gb-handle l" data-id="${t.id}"></div>
+      const w=Math.max(dur*dayPx,22);
+      const wide = w>=64;
+      const labelHtml = wide ? `<span class="gb-txt in">${escapeHtml(shortTitle(t.title))}</span>` : '';
+      barHtml=`<div class="gbar ${sc}" style="left:${left}px;width:${w}px;--bar-c:${o.bar};--bar-bd:${o.bd}">
         <span class="gb-check">${t.status==='done'?'✓':t.status==='busy'?'●':''}</span>
-        <span class="gb-txt">${escapeHtml(shortTitle(t.title))}</span>
-        <div class="gb-handle r" data-id="${t.id}"></div>
+        ${labelHtml}
       </div>`;
     }
-    rows+=`<div class="grow ${t.status==='done'?'done':''}" data-id="${t.id}">
-      <div class="g-label" data-label="${t.id}">
-        <div class="gl-t">${escapeHtml(shortTitle(t.title))}</div>
-        <div class="gl-d"><span class="dot" style="width:7px;height:7px;border-radius:50%;display:inline-block;background:${o.c}"></span>${fmtRange(t.start,t.end)}</div>
+    rows+=`<div class="grow ${t.status==='done'?'done':''} ${t.milestone?'is-ms':''}">
+      <div class="g-label">
+        <div class="gl-t">${t.milestone?'<span class="ms-dot">◆</span> ':''}${escapeHtml(shortTitle(t.title))}</div>
+        <div class="gl-d"><span class="dot" style="background:${o.c}"></span>${fmtRange(t.start,t.end)}</div>
       </div>
-      <div class="g-track" style="${gridBg}">${barHtml}</div>
+      <div class="g-track">${barHtml}</div>
     </div>`;
   }
 
   body.innerHTML=`<div class="gantt" style="--labelw:${LABELW}px">
-    <div class="gantt-scroll" id="ganttScroll">
+    <div class="gantt-headwrap" id="ganttHeadWrap">
+      <div class="gh-label-fixed">Taak</div>
       <div class="gantt-inner" style="width:${LABELW+trackW}px">
         <div class="gantt-head">
-          <div class="gh-label">Taak</div>
+          <div class="gh-label"></div>
           <div class="gh-weeks">${wh}</div>
         </div>
+      </div>
+    </div>
+    <div class="gantt-scroll" id="ganttScroll">
+      <div class="gantt-inner" style="width:${LABELW+trackW}px">
         <div class="gantt-rows" style="position:relative">
+          <div class="gantt-grid">${gridLines}</div>
+          ${nowBand}
           <div class="gantt-today" style="left:${LABELW+todayOff}px"></div>
           ${rows}
         </div>
       </div>
     </div>
-    <div class="gantt-hint">Sleep een balk om te verschuiven · pak de rand om de duur te wijzigen · tik op de taaknaam om te bewerken</div>
+    <div class="gantt-hint">◆ = mijlpaal · groene lijn = vandaag · veeg opzij t/m 1 aug</div>
   </div>`;
 
-  wireGantt(dayPx, startMon);
-  // scroll naar vandaag
-  const sc=document.getElementById('ganttScroll');
-  if(sc) sc.scrollLeft=Math.max(0,todayOff-COLW);
+  const scEl=document.getElementById('ganttScroll');
+  const hwEl=document.getElementById('ganttHeadWrap');
+  // horizontale scroll synchroniseren tussen body en (sticky) header
+  if(scEl&&hwEl){
+    const hInner=hwEl.querySelector('.gantt-inner');
+    scEl.addEventListener('scroll',()=>{ hInner.style.transform=`translateX(${-scEl.scrollLeft}px)`; },{passive:true});
+    scEl.scrollLeft=Math.max(0,todayOff-COLW);
+    hInner.style.transform=`translateX(${-scEl.scrollLeft}px)`;
+  }
 }
 
 function shortTitle(t){ return t.replace(/^◆\s*/,''); }
@@ -1483,162 +1574,344 @@ function isoWeek(d){ const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.ge
   const f=new Date(Date.UTC(x.getUTCFullYear(),0,4));
   return 1+Math.round(((x-f)/DAY-3+((f.getUTCDay()+6)%7))/7); }
 
-function wireGantt(dayPx, startMon){
-  const body=document.getElementById('planBody');
-  // tik op label -> bewerken
-  body.querySelectorAll('[data-label]').forEach(el=>el.onclick=()=>{
-    const t=S.plan.find(x=>x.id===el.dataset.label); if(t) openPlanSheet(t);
-  });
-  // sleep balken + milestones
-  body.querySelectorAll('.gbar, .gms').forEach(bar=>{
-    const id=bar.dataset.id; const t=S.plan.find(x=>x.id===id); if(!t) return;
-    enableDrag(bar,t,dayPx,startMon);
-  });
-}
-
-function enableDrag(el,t,dayPx,startMon){
-  const isMs=el.classList.contains('gms');
-  let mode=null, sx=0, origStart=t.start, origEnd=t.end, moved=false;
-  const startMonISO=toISO(startMon);
-
-  function down(e){
-    e.preventDefault(); e.stopPropagation();
-    const pt=e.touches?e.touches[0]:e;
-    sx=pt.clientX; origStart=t.start; origEnd=t.end; moved=false;
-    if(e.target.classList.contains('gb-handle')) mode=e.target.classList.contains('l')?'l':'r';
-    else mode='move';
-    el.classList.add('dragging');
-    window.addEventListener('mousemove',move); window.addEventListener('mouseup',up);
-    window.addEventListener('touchmove',move,{passive:false}); window.addEventListener('touchend',up);
-  }
-  function move(e){
-    if(e.cancelable)e.preventDefault();
-    const pt=e.touches?e.touches[0]:e;
-    const dxDays=Math.round((pt.clientX-sx)/dayPx);
-    if(dxDays!==0) moved=true;
-    if(mode==='move'||isMs){
-      t.start=addDays(origStart,dxDays); t.end=addDays(origEnd,dxDays);
-    } else if(mode==='l'){
-      let ns=addDays(origStart,dxDays); if(ns>t.end) ns=t.end; t.start=ns;
-    } else if(mode==='r'){
-      let ne=addDays(origEnd,dxDays); if(ne<t.start) ne=t.start; t.end=ne;
-    }
-    // niet vóór de tijdlijn-start slepen
-    if(t.start<startMonISO){ const sh=daysBetween(t.start,startMonISO); t.start=startMonISO; if(mode==='move'||isMs) t.end=addDays(t.end,sh); }
-    liveUpdate();
-  }
-  function liveUpdate(){
-    const off=daysBetween(toISO(startMon),t.start)*dayPx;
-    const dur=Math.max(0,daysBetween(t.start,t.end))+1;
-    if(isMs){ const cx=off+(dur*dayPx)/2; el.style.left=cx+'px';
-      const flag=el.parentNode.querySelector('.gms-flag'); if(flag){flag.style.left=(cx+14)+'px';flag.textContent=fmtShort(t.start);} }
-    else { el.style.left=off+'px'; el.style.width=Math.max(dur*dayPx,26)+'px'; }
-    // label datum live updaten
-    const row=el.closest('.grow'); const dlab=row&&row.querySelector('.gl-d');
-    if(dlab){ const o=OWNERS[t.owner]||OWNERS.jij;
-      dlab.innerHTML=`<span class="dot" style="width:7px;height:7px;border-radius:50%;display:inline-block;background:${o.c}"></span>${fmtRange(t.start,t.end)}`; }
-  }
-  function up(){
-    el.classList.remove('dragging');
-    window.removeEventListener('mousemove',move); window.removeEventListener('mouseup',up);
-    window.removeEventListener('touchmove',move); window.removeEventListener('touchend',up);
-    if(moved){ persist(); renderPlan(); toast('Verplaatst ✓'); }
-    mode=null;
-  }
-  el.addEventListener('mousedown',down);
-  el.addEventListener('touchstart',down,{passive:false});
-}
-
-// ===== LIJST =====
+// ===== LIJST (werkplek: invoeren, slepen, status) =====
 function renderPlanList(){
-  const vis=planVisible();
+  ensurePlan();
   const body=document.getElementById('planBody');
   let html='';
-  for(const ph of PHASES){
-    const tasksAll=S.plan.filter(t=>t.phase===ph.id);
-    const tasks=vis.filter(t=>t.phase===ph.id);
-    if(!tasks.length) continue;
+  for(const pid of phaseOrder()){
+    const tasks=S.plan.filter(t=>t.phase===pid && planVisibleOwner(t));
+    const tasksAll=S.plan.filter(t=>t.phase===pid);
     const d=tasksAll.filter(t=>t.status==='done').length;
     const ppct=tasksAll.length?Math.round(d/tasksAll.length*100):0;
-    const wkRange=tasksAll.length?fmtRange(tasksAll.reduce((m,t)=>t.start<m?t.start:m,tasksAll[0].start),tasksAll.reduce((m,t)=>t.end>m?t.end:m,tasksAll[0].end)):'';
-    html+=`<div class="phase">
-      <div class="phase-head"><span class="pt">Fase ${ph.id} · ${escapeHtml(ph.title)}</span><span class="pw">${wkRange}</span></div>
-      <div class="phase-bar"><i style="width:${ppct}%"></i></div>`;
+    html+=`<div class="pl-phase" data-phase="${pid}">
+      <div class="pl-phead">
+        <button class="pl-pname" data-rename="${pid}">${escapeHtml(phaseName(pid))} <span class="pl-pen">✎</span></button>
+        <span class="pl-pmeta">${d}/${tasksAll.length}</span>
+      </div>
+      <div class="pl-pbar"><i style="width:${ppct}%"></i></div>
+      <div class="pl-list" data-plist="${pid}">`;
     for(const t of tasks) html+=planCard(t);
-    html+=`</div>`;
+    if(!tasks.length) html+=`<div class="pl-empty">Geen taken${planFilter!=='all'?' voor dit filter':''}</div>`;
+    html+=`</div></div>`;
   }
-  body.innerHTML=html||`<div class="intro" style="text-align:center">Niets in deze filter.</div>`;
-  body.querySelectorAll('.task-check').forEach(c=>c.onclick=(e)=>{
+  html+=`<button class="new-proj" id="newPhaseBtn">+ Nieuwe lijst</button>`;
+  body.innerHTML=html;
+
+  // status cyclen
+  body.querySelectorAll('.pl-status').forEach(btn=>btn.onclick=(e)=>{
     e.stopPropagation();
-    const t=S.plan.find(x=>x.id===c.dataset.id);
-    if(!t)return; t.status=STATUS_NEXT[t.status]||'open';
-    persist();renderPlan();
-    toast(t.status==='done'?'Afgevinkt ✓':t.status==='busy'?'Loopt nu':'Heropend');
+    const t=S.plan.find(x=>x.id===btn.dataset.id); if(!t) return;
+    t.status=STATUS_NEXT[t.status]||'open'; persist(); renderPlan();
+    toast(t.status==='done'?'Klaar ✓':t.status==='busy'?'Loopt':'Open');
   });
-  body.querySelectorAll('.task').forEach(card=>card.onclick=()=>{
-    const id=card.dataset.id; const t=S.plan.find(x=>x.id===id); if(t) openPlanSheet(t);
+  // mijlpaal toggle (bookmark)
+  body.querySelectorAll('.pl-bookmark').forEach(btn=>btn.onclick=(e)=>{
+    e.stopPropagation();
+    const t=S.plan.find(x=>x.id===btn.dataset.id); if(!t) return;
+    t.milestone=!t.milestone; persist(); renderPlan();
+    toast(t.milestone?'Mijlpaal aan':'Mijlpaal uit');
   });
+  // kaart openen (bewerken)
+  body.querySelectorAll('.pl-card').forEach(card=>card.onclick=()=>{
+    const wrap=card.closest('.pl-swipe'); if(wrap&&wrap._swiped) return;
+    const t=S.plan.find(x=>x.id===card.dataset.id); if(t) openPlanSheet(t);
+  });
+  // fase hernoemen / verwijderen
+  body.querySelectorAll('[data-rename]').forEach(el=>el.onclick=(e)=>{
+    e.stopPropagation();
+    openPhaseRename(el.dataset.rename);
+  });
+  // nieuwe lijst
+  document.getElementById('newPhaseBtn').onclick=addPhase;
+  // swipe-to-delete op taken
+  body.querySelectorAll('.pl-swipe').forEach(makeSwipeDelete);
+  // slepen binnen + tussen fases
+  phaseOrder().forEach(pid=>{
+    const list=body.querySelector(`[data-plist="${pid}"]`);
+    if(list) makePlanReorder(list);
+  });
+}
+
+function makeSwipeDelete(wrap){
+  const card=wrap.querySelector('.pl-card');
+  const bg=wrap.querySelector('.pl-swipe-bg');
+  const id=wrap.dataset.swipe;
+  let x0=0,y0=0,dx=0,active=false,decided=false,horiz=false;
+  const THRESH=90; // px om te verwijderen
+  function down(e){
+    if(e.target.closest('.pl-drag')) return; // slepen-handle = herordenen, niet swipen
+    const pt=e.touches?e.touches[0]:e;
+    x0=pt.clientX; y0=pt.clientY; dx=0; active=true; decided=false; horiz=false;
+    card.style.transition='none';
+    if(bg) bg.style.transition='none';
+    window.addEventListener('pointermove',move,{passive:false});
+    window.addEventListener('pointerup',up);
+    window.addEventListener('touchmove',move,{passive:false});
+    window.addEventListener('touchend',up);
+  }
+  function move(e){
+    if(!active) return;
+    const pt=e.touches?e.touches[0]:e;
+    const ddx=pt.clientX-x0, ddy=pt.clientY-y0;
+    if(!decided){
+      if(Math.abs(ddx)<6 && Math.abs(ddy)<6) return;
+      horiz=Math.abs(ddx)>Math.abs(ddy);
+      decided=true;
+      if(!horiz){ cleanup(); return; } // verticaal = laat scroll/herorden met rust
+    }
+    if(horiz){
+      if(e.cancelable) e.preventDefault();
+      dx=Math.min(0,ddx); // alleen naar links
+      card.style.transform=`translateX(${dx}px)`;
+      // rode laag faadt mee met de afstand (subtiel)
+      if(bg) bg.style.opacity=Math.min(1, -dx/THRESH).toFixed(2);
+      wrap.classList.toggle('arming', dx<-THRESH);
+    }
+  }
+  function up(){
+    if(!active){ return; }
+    cleanup();
+    card.style.transition='transform .2s';
+    if(bg) bg.style.transition='opacity .15s';
+    if(horiz){ wrap._swiped=true; setTimeout(()=>{wrap._swiped=false;},250); }
+    if(horiz && dx<-THRESH){
+      if(bg) bg.style.opacity='1';
+      card.style.transform=`translateX(-110%)`;
+      setTimeout(()=>deletePlanTask(id),160);
+    } else {
+      card.style.transform='translateX(0)';
+      if(bg) bg.style.opacity='0';
+      wrap.classList.remove('arming');
+    }
+  }
+  function cleanup(){
+    active=false;
+    window.removeEventListener('pointermove',move);
+    window.removeEventListener('pointerup',up);
+    window.removeEventListener('touchmove',move);
+    window.removeEventListener('touchend',up);
+  }
+  wrap.addEventListener('pointerdown',down);
+  wrap.addEventListener('touchstart',down,{passive:true});
+}
+
+function addPhase(){
+  ensurePlan();
+  const id='L'+Date.now().toString(36);
+  S.phaseOrder.push(id);
+  S.phaseNames[id]='Nieuwe lijst';
+  persist(); renderPlan();
+  openPhaseRename(id);
 }
 
 function planCard(t){
   const o=OWNERS[t.owner]||OWNERS.jij;
-  const sc=t.status==='done'?'s-done':t.status==='busy'?'s-busy':'';
-  const mark=t.status==='done'?'✓':t.status==='busy'?'●':'';
-  return `<div class="task ${t.status==='done'?'done':''} ${t.milestone?'milestone':''}" data-id="${t.id}" style="--owner-c:${o.c}">
-    <div class="task-main">
-      <button class="task-check ${sc}" data-id="${t.id}">${mark}</button>
-      <div class="task-body">
-        <div class="task-title">${escapeHtml(shortTitle(t.title))}</div>
-        <div class="task-meta">
-          <span class="chip"><span class="dot" style="background:${o.c}"></span>${o.label}</span>
-          <span class="chip wk">${fmtRange(t.start,t.end)}</span>
-        </div>
-        ${t.block?`<div class="task-block">⚠ ${escapeHtml(t.block)}</div>`:''}
-      </div>
+  const sm=STATUS_META[t.status]||STATUS_META.open;
+  return `<div class="pl-swipe" data-swipe="${t.id}">
+    <div class="pl-swipe-bg"><span>Verwijderen</span></div>
+    <div class="pl-card ${t.status==='done'?'done':''} ${t.milestone?'is-ms':''}" data-id="${t.id}" data-cardid="${t.id}" style="--oc:${o.c}">
+    <button class="pl-bookmark ${t.milestone?'on':''}" data-id="${t.id}" title="Markeer als mijlpaal" aria-label="Mijlpaal">
+      <svg viewBox="0 0 24 24" width="15" height="20" aria-hidden="true"><path d="M5 2h14a1 1 0 0 1 1 1v18l-8-5-8 5V3a1 1 0 0 1 1-1z"/></svg>
+    </button>
+    <span class="drag-h pl-drag" title="Sleep om te ordenen">⠿</span>
+    <div class="pl-main">
+      <div class="pl-name">${escapeHtml(shortTitle(t.title))}</div>
+      <div class="pl-owner"><span class="dot" style="background:${o.c}"></span>${o.label}</div>
+      <div class="pl-dates">${fmtRange(t.start,t.end)}${t.milestone?'<span class="pl-ms-tag">mijlpaal</span>':''}</div>
+    </div>
+    <button class="pl-status st-${t.status}" data-id="${t.id}" style="--sc:${sm.c};--sbg:${sm.bg}">${sm.l}</button>
     </div>
   </div>`;
 }
 
+function deletePlanTask(id){
+  removeWithUndo('Taak verwijderd',
+    ()=>S.plan,
+    (snap)=>{ S.plan=snap; },
+    ()=>{ S.plan=S.plan.filter(x=>x.id!==id); }
+  );
+}
+
+function makePlanReorder(list){
+  list.querySelectorAll('.pl-card').forEach(card=>{
+    const handle=card.querySelector('.pl-drag');
+    if(!handle) return;
+    handle.addEventListener('click',e=>e.stopPropagation());
+    handle.addEventListener('pointerdown',e=>{
+      e.preventDefault(); e.stopPropagation();
+      const bodyEl=document.getElementById('planBody');
+      const startY=e.clientY; let moved=false;
+      const rect=card.getBoundingClientRect();
+      card.classList.add('pl-dragging');
+      card.style.width=rect.width+'px';
+      // drop-indicator element
+      const dl=document.createElement('div'); dl.className='pl-dropline';
+      function clearMarks(){
+        if(dl.parentNode) dl.parentNode.removeChild(dl);
+        bodyEl.querySelectorAll('.pl-list.drop-target').forEach(l=>l.classList.remove('drop-target'));
+      }
+      function mv(ev){
+        const y=ev.clientY;
+        if(Math.abs(y-startY)>4) moved=true;
+        if(!moved) return;
+        card.style.transform=`translateY(${y-startY}px)`;
+        const allCards=Array.from(bodyEl.querySelectorAll('.pl-card')).filter(c=>c!==card);
+        let target=null;
+        for(const c of allCards){ const r=c.getBoundingClientRect();
+          if(ev.clientY>=r.top && ev.clientY<=r.bottom){ target=c; break; } }
+        const lists=Array.from(bodyEl.querySelectorAll('.pl-list'));
+        let targetList=null;
+        for(const l of lists){ const r=l.getBoundingClientRect();
+          if(ev.clientY>=r.top-6 && ev.clientY<=r.bottom+6){ targetList=l; } }
+        clearMarks();
+        if(targetList) targetList.classList.add('drop-target');
+        if(target){
+          const r=target.getBoundingClientRect();
+          const after=ev.clientY>(r.top+r.height/2);
+          card.dataset._pending=target.dataset.cardid+'|'+(after?'after':'before');
+          const tw=target.closest('.pl-swipe')||target;
+          tw.parentNode.insertBefore(dl, after?tw.nextSibling:tw);
+        } else if(targetList){
+          card.dataset._pending=targetList.dataset.plist+'|end';
+          targetList.appendChild(dl);
+        }
+      }
+      function up(){
+        window.removeEventListener('pointermove',mv); window.removeEventListener('pointerup',up);
+        card.classList.remove('pl-dragging'); card.style.transform=''; card.style.width='';
+        const pend=card.dataset._pending; delete card.dataset._pending;
+        clearMarks();
+        if(moved && pend){ applyPlanDrop(card.dataset.cardid, pend); }
+      }
+      window.addEventListener('pointermove',mv); window.addEventListener('pointerup',up);
+    });
+  });
+}
+
+function applyPlanDrop(dragId, pend){
+  const [ref,pos]=pend.split('|');
+  const dragT=S.plan.find(t=>t.id===dragId); if(!dragT) return;
+  // verwijder uit array
+  S.plan=S.plan.filter(t=>t.id!==dragId);
+  if(pos==='end'){
+    dragT.phase=ref; // ref is phase id
+    // achteraan die fase plaatsen: vind laatste index van die fase
+    let lastIdx=-1;
+    S.plan.forEach((t,i)=>{ if(t.phase===ref) lastIdx=i; });
+    S.plan.splice(lastIdx+1,0,dragT);
+  } else {
+    const refT=S.plan.find(t=>t.id===ref);
+    if(refT){ dragT.phase=refT.phase;
+      let idx=S.plan.indexOf(refT); if(pos==='after') idx++;
+      S.plan.splice(idx,0,dragT);
+    } else { S.plan.push(dragT); }
+  }
+  persist(); renderPlan(); toast('Verplaatst ✓');
+}
+
+function openPhaseRename(pid){
+  document.getElementById('sheetTitle').textContent='Lijst hernoemen';
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
+  document.getElementById('sheetSub').textContent=phaseName(pid);
+  const taskCount=S.plan.filter(t=>t.phase===pid).length;
+  document.getElementById('formArea').innerHTML=`
+    <div class="field"><label>Naam van deze lijst</label><input id="phName" value="${escapeHtml(phaseName(pid))}"></div>
+    <button class="save" id="phSave">Opslaan</button>
+    <button class="del-btn" id="phDelete">Lijst verwijderen${taskCount?` (${taskCount} ${taskCount===1?'taak':'taken'} ook)`:''}</button>`;
+  const inp=document.getElementById('phName');
+  document.getElementById('phSave').onclick=()=>{
+    const nv=inp.value.trim(); if(nv){ S.phaseNames[pid]=nv; persist(); renderPlan(); }
+    closeSheets(); toast('Lijst hernoemd ✓');
+  };
+  document.getElementById('phDelete').onclick=()=>{
+    if(phaseOrder().length<=1){ alert('Er moet minstens één lijst blijven.'); return; }
+    const msg=taskCount?`Deze lijst en de ${taskCount} ${taskCount===1?'taak':'taken'} erin verwijderen?`:'Deze lege lijst verwijderen?';
+    if(confirm(msg)){
+      S.plan=S.plan.filter(t=>t.phase!==pid);
+      S.phaseOrder=S.phaseOrder.filter(x=>x!==pid);
+      delete S.phaseNames[pid];
+      persist(); renderPlan(); closeSheets(); toast('Lijst verwijderd');
+    }
+  };
+  scrim.classList.add('show');sheet.classList.add('show');
+  setTimeout(()=>inp.focus(),120);
+}
+
 function openPlanSheet(t){
-  const o=OWNERS[t.owner]||OWNERS.jij;
-  document.getElementById('sheetTitle').textContent=shortTitle(t.title);
-  document.getElementById('sheetSub').textContent=`${o.label} · ${fmtRange(t.start,t.end)}`;
-  const segBtn=(s,l)=>`<button data-s="${s}" class="${t.status===s?'act-out':''}" style="${t.status===s?'':'opacity:.6'}">${l}</button>`;
+  const st=document.getElementById('sheetTitle'), su=document.getElementById('sheetSub');
+  st.style.display='none'; su.style.display='none';
   const ownBtn=(k)=>`<button data-o="${k}" class="own-btn ${t.owner===k?'active':''}" style="--oc:${OWNERS[k].c}"><span class="dot" style="background:${OWNERS[k].c}"></span>${OWNERS[k].label}</button>`;
   document.getElementById('formArea').innerHTML=`
-    <div class="field"><label>Naam</label><input id="planTitle" value="${escapeHtml(shortTitle(t.title))}"></div>
+    <div class="field" style="margin-top:6px"><label>Naam</label><input id="planTitle" value="${escapeHtml(shortTitle(t.title))}"></div>
     <div class="field"><label>Wie doet dit?</label><div class="own-row">${ownBtn('jasper')}${ownBtn('mats')}${ownBtn('jij')}${ownBtn('gedeeld')}</div></div>
-    <div class="date-row">
-      <div class="field"><label>Van (maandag…)</label><input type="date" id="planStart" value="${t.start}"></div>
-      <div class="field"><label>Tot en met</label><input type="date" id="planEnd" value="${t.end}"></div>
+    <div class="field"><label>Wanneer</label>
+      <div class="cal" id="planCal"></div>
+      <div class="cal-sum" id="calSum"></div>
     </div>
-    <div class="field"><label>Status</label><div class="seg">
-      ${segBtn('open','Open')}${segBtn('busy','Loopt')}${segBtn('done','Klaar')}
-    </div></div>
-    ${t.note?`<div class="task-note" style="margin:4px 0 12px"><b>Let op:</b> ${escapeHtml(t.note)}</div>`:''}
-    ${t.block?`<div class="task-block" style="margin:0 0 12px">⚠ ${escapeHtml(t.block)}</div>`:''}
-    <div class="field"><label>Eigen notitie</label><textarea id="planMine" rows="2" placeholder="Afspraak, contactpersoon, telefoonnummer…">${escapeHtml(t.mine||'')}</textarea></div>
+    <div class="field" style="margin-top:14px"><label>Notitie</label><textarea id="planMine" rows="2" placeholder="Afspraak, contactpersoon, telefoonnummer…">${escapeHtml(t.mine||t.note||'')}</textarea></div>
     <button class="save" id="planSave">Opslaan</button>
-    <button class="save" id="planDelete" style="background:rgba(242,166,173,.18);color:var(--danger);margin-top:8px">Verwijderen</button>`;
-  let chosenStatus=t.status, chosenOwner=t.owner;
-  document.querySelectorAll('#formArea .seg button').forEach(b=>b.onclick=()=>{
-    chosenStatus=b.dataset.s;
-    document.querySelectorAll('#formArea .seg button').forEach(x=>{x.className=x.dataset.s===chosenStatus?'act-out':'';x.style.opacity=x.dataset.s===chosenStatus?'1':'.6';});
-  });
+    <button class="del-btn" id="planDelete">Verwijderen</button>`;
+  let chosenOwner=t.owner;
   document.querySelectorAll('#formArea .own-btn').forEach(b=>b.onclick=()=>{
     chosenOwner=b.dataset.o;
     document.querySelectorAll('#formArea .own-btn').forEach(x=>x.classList.toggle('active',x.dataset.o===chosenOwner));
   });
+  // --- kalender-state ---
+  let selStart=t.start, selEnd=t.end||t.start;
+  let pick=0; // 0 = volgende tik zet begin; 1 = volgende tik zet eind
+  let viewM=pd(selStart).getMonth(), viewY=pd(selStart).getFullYear();
+  const calEl=document.getElementById('planCal'), sumEl=document.getElementById('calSum');
+  function drawCal(){
+    const first=new Date(viewY,viewM,1);
+    const offset=(first.getDay()+6)%7; // ma=0
+    const dim=new Date(viewY,viewM+1,0).getDate();
+    let cells='';
+    for(let i=0;i<offset;i++) cells+=`<span class="cd empty"></span>`;
+    for(let d=1;d<=dim;d++){
+      const iso=toISO(new Date(viewY,viewM,d));
+      const inRange = iso>=selStart && iso<=selEnd;
+      const isStart = iso===selStart, isEnd = iso===selEnd;
+      let cls='cd';
+      if(inRange) cls+=' in';
+      if(isStart) cls+=' start';
+      if(isEnd) cls+=' end';
+      if(isStart&&isEnd) cls+=' single';
+      cells+=`<button class="${cls}" data-iso="${iso}">${d}</button>`;
+    }
+    calEl.innerHTML=`
+      <div class="cal-head">
+        <button class="cal-nav" id="calPrev" aria-label="Vorige maand">‹</button>
+        <span class="cal-title">${MFULL[MONTHS[viewM]]} ${viewY}</span>
+        <button class="cal-nav" id="calNext" aria-label="Volgende maand">›</button>
+      </div>
+      <div class="cal-dow"><span>M</span><span>D</span><span>W</span><span>D</span><span>V</span><span>Z</span><span>Z</span></div>
+      <div class="cal-grid">${cells}</div>`;
+    document.getElementById('calPrev').onclick=()=>{ viewM--; if(viewM<0){viewM=11;viewY--;} drawCal(); };
+    document.getElementById('calNext').onclick=()=>{ viewM++; if(viewM>11){viewM=0;viewY++;} drawCal(); };
+    calEl.querySelectorAll('.cd[data-iso]').forEach(b=>b.onclick=()=>{
+      const iso=b.dataset.iso;
+      if(pick===0){ selStart=iso; selEnd=iso; pick=1; }
+      else { if(iso<selStart){ selEnd=selStart; selStart=iso; } else { selEnd=iso; } pick=0; }
+      drawCal(); updateSum();
+    });
+  }
+  function updateSum(){
+    sumEl.textContent = selStart===selEnd
+      ? `Eén dag · ${fmtLong(selStart)}`
+      : `${fmtLong(selStart)} → ${fmtLong(selEnd)}`;
+  }
+  drawCal(); updateSum();
   document.getElementById('planSave').onclick=()=>{
     const nt=document.getElementById('planTitle').value.trim(); if(nt) t.title=nt;
-    let ns=document.getElementById('planStart').value, ne=document.getElementById('planEnd').value;
-    if(ns) t.start=ns; if(ne) t.end=ne; if(t.end<t.start) t.end=t.start;
-    t.status=chosenStatus; t.owner=chosenOwner;
-    t.mine=document.getElementById('planMine').value.trim();
+    t.start=selStart; t.end=selEnd<selStart?selStart:selEnd;
+    t.owner=chosenOwner;
+    t.mine=document.getElementById('planMine').value.trim(); delete t.note;
     persist();renderPlan();closeSheets();toast('Opgeslagen ✓');
   };
   document.getElementById('planDelete').onclick=()=>{
-    if(confirm('Deze taak verwijderen?')){ S.plan=S.plan.filter(x=>x.id!==t.id); persist();renderPlan();closeSheets();toast('Verwijderd'); }
+    closeSheets();
+    deletePlanTask(t.id);
   };
   scrim.classList.add('show');sheet.classList.add('show');
 }
@@ -1651,7 +1924,13 @@ function addPlanTask(){
   openPlanSheet(t);
 }
 
-function renderAll(){renderModel();renderBalans();renderProj();renderPlan();}
+function renderAll(){renderModel();renderBalans();renderProj();renderPlan();renderIntrekBadge();}
+function renderIntrekBadge(){
+  const el=document.getElementById('intrekBadge'); if(!el) return;
+  const now=new Date(); now.setHours(0,0,0,0);
+  const dagen=Math.max(0,Math.ceil((pd(INTREK_ISO)-now)/DAY));
+  el.innerHTML=`<div class="ib-n">${dagen}<small> dagen</small></div><div class="ib-k">tot intrek · 1 aug</div>`;
+}
 function escapeHtml(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
 // Maakt rijen binnen een container sleepbaar (touch + muis) via een handle.
@@ -1749,6 +2028,26 @@ document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
 document.getElementById('bPrev').onclick=()=>{if(bMonthIdx>0){bMonthIdx--;renderBalans();}};
 document.getElementById('bNext').onclick=()=>{if(bMonthIdx<11){bMonthIdx++;renderBalans();}};
 
+// ===== Bedragen verbergen (privacy) =====
+const EYE_OPEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+let amountsHidden=false;
+function applyAmountsHidden(){
+  document.body.classList.toggle('hide-amounts',amountsHidden);
+  const btn=document.getElementById('eyeBtn');
+  btn.innerHTML=amountsHidden?EYE_OFF:EYE_OPEN;
+  btn.classList.toggle('hidden-on',amountsHidden);
+  btn.title=amountsHidden?'Bedragen tonen':'Bedragen verbergen';
+}
+document.getElementById('eyeBtn').onclick=()=>{
+  amountsHidden=!amountsHidden;
+  try{ localStorage.setItem('hagestraat_hideAmounts', amountsHidden?'1':'0'); }catch(e){}
+  applyAmountsHidden();
+};
+try{ amountsHidden = localStorage.getItem('hagestraat_hideAmounts')==='1'; }catch(e){}
+applyAmountsHidden();
+
+
 const scrim=document.getElementById('scrim'),sheet=document.getElementById('sheet'),setSheet=document.getElementById('setSheet');
 function closeSheets(){scrim.classList.remove('show');sheet.classList.remove('show');setSheet.classList.remove('show');}
 scrim.onclick=closeSheets;
@@ -1763,6 +2062,7 @@ document.getElementById('fab').onclick=()=>{
 
 function openQuickSheet(){
   document.getElementById('sheetTitle').textContent='Snel toevoegen';
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
   document.getElementById('sheetSub').textContent='Wat poppt er in je hoofd op?';
   document.getElementById('formArea').innerHTML=`
     <div class="field"><div class="seg">
@@ -1795,6 +2095,7 @@ function projItemFields(){
 }
 function openItemSheet(projId, fromFab){
   document.getElementById('sheetTitle').textContent='Post toevoegen';
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
   const p=S.projects.find(x=>x.id===projId);
   document.getElementById('sheetSub').textContent=fromFab?'Kies project en vul in.':'Aan project: '+p.name;
   document.getElementById('formArea').innerHTML=projItemFields()+
@@ -1822,6 +2123,7 @@ function openEditItem(projId,itemId){
   const it=p.items.find(x=>x.id===itemId); if(!it)return;
   const im=it.month||p.month;
   document.getElementById('sheetTitle').textContent='Onderdeel bewerken';
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
   document.getElementById('sheetSub').textContent=p.name;
   document.getElementById('formArea').innerHTML=projItemFields()+`<button class="save" id="saveEditItemBtn">Opslaan</button>`;
   // pre-fill
@@ -1857,6 +2159,7 @@ function openEditItem(projId,itemId){
 function openEditProject(projId){
   const p=S.projects.find(x=>x.id===projId); if(!p)return;
   document.getElementById('sheetTitle').textContent='Project bewerken';
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
   document.getElementById('sheetSub').textContent='Pas de naam of standaard-betaalmaand aan.';
   document.getElementById('formArea').innerHTML=`
     <div class="field"><label>Projectnaam</label><input type="text" id="epName" autocomplete="off" value="${escapeHtml(p.name)}"></div>
@@ -1897,6 +2200,7 @@ function balFields(){
 let balType='in',balRecur=false;
 function openBalansSheet(){
   document.getElementById('sheetTitle').textContent='Toevoegen aan balans';
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
   document.getElementById('sheetSub').textContent='Inkomst of vaste last.';
   document.getElementById('formArea').innerHTML=balFields()+`<button class="save" id="saveBalBtn">Opslaan</button>`;
   wireBal(); document.getElementById('saveBalBtn').onclick=saveBal;
@@ -1933,6 +2237,7 @@ function openEditFixed(id,m){
   const hasOverride=f.overrides && f.overrides[m]!=null;
   editFixState={id,month:m,scope: hasOverride?'this':'all'};
   document.getElementById('sheetTitle').textContent=f.name;
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
   document.getElementById('sheetSub').textContent='Pas het bedrag aan voor '+MFULL[m]+'.';
   document.getElementById('formArea').innerHTML=`
     <div class="field"><label>Naam</label><input type="text" id="efName" autocomplete="off" value="${escapeHtml(f.name)}"></div>
@@ -1973,6 +2278,7 @@ function openEditFixed(id,m){
 
 document.getElementById('newProjBtn').onclick=()=>{
   document.getElementById('sheetTitle').textContent='Nieuw project';
+  document.getElementById('sheetTitle').style.display='';document.getElementById('sheetSub').style.display='';
   document.getElementById('sheetSub').textContent='Groepeer kosten onder een noemer.';
   document.getElementById('formArea').innerHTML=`
     <div class="field"><label>Projectnaam</label><input type="text" id="npName" placeholder="bijv. Tuin"></div>
@@ -1996,11 +2302,6 @@ document.getElementById('setSave').onclick=()=>{
   S.start=parseFloat(document.getElementById('setStart').value)||0;
   S.buffer=parseFloat(document.getElementById('setBuffer').value)||0;
   persist();renderAll();closeSheets();toast('Bewaard ✓');
-};
-document.getElementById('resetBtn').onclick=()=>{
-  if(confirm('Terug naar de oorspronkelijke Excel-data? Eigen toevoegingen gaan verloren.')){
-    S=defaultState();persist();renderAll();toast('Gereset ✓');
-  }
 };
 
 // ---- Back-up: exporteren naar een bestandje ----
