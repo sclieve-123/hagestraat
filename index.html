@@ -278,8 +278,9 @@
   /* Gantt — alleen kijken, horizontaal scrollbaar t/m 1 aug */
   .gantt{background:var(--glass);border:1px solid var(--line);border-radius:18px;overflow:visible;position:relative;
     backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);box-shadow:var(--shadow);}
-  .gantt-headwrap{position:sticky;top:0;z-index:8;overflow:hidden;border-radius:18px 18px 0 0;border-bottom:1px solid var(--line);background:#2c2723;}
-  .gantt-headwrap .gh-label-fixed{position:absolute;left:0;top:0;bottom:0;z-index:9;width:var(--labelw);background:#2c2723;
+  .gantt-headwrap{position:sticky;top:0;z-index:8;overflow:hidden;border-radius:17px 17px 0 0;border-bottom:1px solid var(--line);background:#2c2723;
+    box-shadow:0 6px 14px rgba(0,0,0,.16);}
+  .gantt-headwrap .gh-label-fixed{position:absolute;left:0;top:0;bottom:0;z-index:9;width:var(--labelw);background:#2c2723;border-radius:17px 0 0 0;
     border-right:1px solid var(--line);font-size:9.5px;color:var(--muted2);font-weight:600;text-transform:uppercase;letter-spacing:.08em;
     display:flex;align-items:center;padding:0 12px;}
   .gantt-scroll{overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;}
@@ -301,21 +302,22 @@
   .gantt-grid i{position:absolute;top:0;bottom:0;width:1px;background:var(--line2);opacity:.6;}
 
   .gantt-rows{position:relative;}
-  .grow{display:flex;align-items:center;height:46px;border-top:1px solid var(--line2);position:relative;}
+  .grow{display:flex;align-items:stretch;min-height:46px;border-top:1px solid var(--line2);position:relative;}
   .grow:first-child{border-top:none;}
   /* sticky labelkolom: vrijwel dicht, alleen vage gloed van de balken schijnt door */
-  .grow .g-label{flex:none;width:var(--labelw);position:sticky;left:0;z-index:5;
+  .grow .g-label{flex:none;width:var(--labelw);position:sticky;left:0;z-index:5;cursor:pointer;
     background:rgba(40,36,32,.86);backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%);
-    border-right:1px solid var(--line);padding:0 10px 0 13px;height:100%;display:flex;flex-direction:column;justify-content:center;gap:2px;}
-  .grow .g-label .gl-t{font-size:11px;font-weight:600;color:var(--ink);line-height:1.2;
+    border-right:1px solid var(--line);padding:9px 10px 9px 13px;display:flex;flex-direction:column;justify-content:center;gap:2px;}
+  .grow .g-label .gl-t{font-size:11px;font-weight:600;color:var(--ink);line-height:1.25;
     overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+  .grow.expanded .g-label .gl-t{-webkit-line-clamp:unset;display:block;overflow:visible;white-space:normal;}
   .grow .g-label .gl-t .ms-dot{color:var(--gold);font-size:9px;}
   .grow .g-label .gl-d{font-size:9px;color:var(--muted2);font-weight:500;display:flex;align-items:center;gap:4px;}
   .grow .g-label .gl-d .dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
   .grow.done{background:rgba(95,208,122,.07);}
   .grow.done .gl-t{text-decoration:line-through;color:var(--muted2);}
   .grow.done .g-label{background:rgba(40,46,40,.88);}
-  .g-track{position:relative;height:100%;flex:1;}
+  .g-track{position:relative;flex:1;min-height:46px;}
 
   .gbar{position:absolute;top:9px;height:28px;border-radius:9px;display:flex;align-items:center;gap:6px;padding:0 8px;
     background:var(--bar-c);border:1px solid var(--bar-bd);box-shadow:0 2px 8px rgba(0,0,0,.2);}
@@ -1410,6 +1412,9 @@ const STATUS_NEXT={open:'busy',busy:'done',done:'open'};
 const INTREK_ISO='2026-08-01';
 let planFilter='all';
 let planMode='list'; // list (werkplek) | gantt (alleen kijken)
+let ganttColW=70;          // breedte van een week-kolom (zoomniveau)
+const GANTT_COLW_MIN=34, GANTT_COLW_MAX=124;
+let ganttScrollLeft=null;  // onthoud horizontale scrollpositie bij her-render (zoom)
 
 // --- datum helpers ---
 const DAY=86400000;
@@ -1453,7 +1458,7 @@ function renderPlan(){
   // ---- mode toggle ----
   document.querySelectorAll('#planMode button').forEach(b=>{
     b.classList.toggle('active',b.dataset.m===planMode);
-    b.onclick=()=>{planMode=b.dataset.m;renderPlan();};
+    b.onclick=()=>{ if(b.dataset.m!==planMode){ ganttScrollLeft=null; } planMode=b.dataset.m;renderPlan();};
   });
 
   if(planMode==='gantt') renderGantt();
@@ -1477,7 +1482,7 @@ function renderGantt(){
   if(es>lastSun) lastSun=es;
   const totalDays=Math.round((lastSun-startMon)/DAY)+1;
   const weeks=Math.ceil(totalDays/7);
-  const COLW=70; const dayPx=COLW/7;
+  const COLW=ganttColW; const dayPx=COLW/7;
   const PADL=20; // extra ruimte links binnen de track
   const trackW=totalDays*dayPx+PADL;
   const LABELW=120;
@@ -1554,7 +1559,7 @@ function renderGantt(){
         </div>
       </div>
     </div>
-    <div class="gantt-hint">◆ = mijlpaal · groene lijn = vandaag · veeg opzij t/m 1 aug</div>
+    <div class="gantt-hint">◆ = mijlpaal · tik op een taak voor de volledige naam · knijp om te zoomen</div>
   </div>`;
 
   const scEl=document.getElementById('ganttScroll');
@@ -1562,9 +1567,39 @@ function renderGantt(){
   // horizontale scroll synchroniseren tussen body en (sticky) header
   if(scEl&&hwEl){
     const hInner=hwEl.querySelector('.gantt-inner');
-    scEl.addEventListener('scroll',()=>{ hInner.style.transform=`translateX(${-scEl.scrollLeft}px)`; },{passive:true});
-    scEl.scrollLeft=Math.max(0,todayOff-COLW);
-    hInner.style.transform=`translateX(${-scEl.scrollLeft}px)`;
+    const syncHead=()=>{ hInner.style.transform=`translateX(${-scEl.scrollLeft}px)`; };
+    scEl.addEventListener('scroll',syncHead,{passive:true});
+    if(ganttScrollLeft!=null){ scEl.scrollLeft=ganttScrollLeft; }
+    else { scEl.scrollLeft=Math.max(0,todayOff-COLW); }
+    syncHead();
+  }
+
+  // ---- rij uitklappen: tik op de taaknaam-kolom toont volledige naam ----
+  body.querySelectorAll('.grow').forEach(row=>{
+    const label=row.querySelector('.g-label');
+    if(label) label.addEventListener('click',()=>{ row.classList.toggle('expanded'); });
+  });
+
+  // ---- pinch-to-zoom: vingers naar buiten = inzoomen (bredere kolommen) ----
+  if(scEl){
+    let pinchStart=0, pinchColW=0;
+    const dist=(t)=>Math.hypot(t[0].clientX-t[1].clientX, t[0].clientY-t[1].clientY);
+    scEl.addEventListener('touchstart',(e)=>{
+      if(e.touches.length===2){ pinchStart=dist(e.touches); pinchColW=ganttColW; }
+    },{passive:true});
+    scEl.addEventListener('touchmove',(e)=>{
+      if(e.touches.length===2 && pinchStart){
+        e.preventDefault();
+        const ratio=dist(e.touches)/pinchStart;
+        const nw=Math.max(GANTT_COLW_MIN,Math.min(GANTT_COLW_MAX, Math.round(pinchColW*ratio)));
+        if(Math.abs(nw-ganttColW)>=4){
+          ganttColW=nw;
+          ganttScrollLeft=scEl.scrollLeft; // behoud positie
+          renderGantt();
+        }
+      }
+    },{passive:false});
+    scEl.addEventListener('touchend',(e)=>{ if(e.touches.length<2) pinchStart=0; });
   }
 }
 
